@@ -98,3 +98,41 @@ export const ReviewModal = ({ order, onClose, onSubmit }) => {
     </div>
   );
 };
+
+export const UserDetailsModal = ({ user, onClose }) => {
+  if (!user) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal" style={{ maxWidth: 520 }}>
+        <h2 className="modal-title" style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: 8 }}>User Details</h2>
+        <p className="modal-sub" style={{ fontSize: '.85rem', color: 'var(--slate-500)', marginBottom: 20 }}>
+          Governance view for <strong>{user.name}</strong>
+        </p>
+
+        <div style={{ display: 'grid', gap: 12 }}>
+          {[
+            ['Name', user.name],
+            ['Email', user.email],
+            ['Role', user.role],
+            ['Approved', user.isApproved ? 'Yes' : 'No'],
+            ['Suspended', user.isSuspended ? 'Yes' : 'No'],
+            ['Phone', user.phone || 'Not provided'],
+            ['Address', user.address || 'Not provided'],
+            ['Company', user.companyName || 'Not provided'],
+            ['Preferred Language', user.preferredLanguage || 'en']
+          ].map(([label, value]) => (
+            <div key={label} style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: 12, padding: '10px 12px', borderRadius: 10, background: 'var(--slate-50)', border: '1px solid var(--slate-200)' }}>
+              <strong style={{ color: 'var(--slate-700)' }}>{label}</strong>
+              <span style={{ color: 'var(--slate-900)', wordBreak: 'break-word' }}>{value}</span>
+            </div>
+          ))}
+        </div>
+
+        <button className="btn-secondary" style={{ width: '100%', marginTop: 18 }} onClick={onClose}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};

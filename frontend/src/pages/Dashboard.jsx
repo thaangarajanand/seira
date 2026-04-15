@@ -13,7 +13,7 @@ import ProfileSection from '../components/Dashboard/ProfileSection';
 import InventoryManager from '../components/Dashboard/InventoryManager';
 import OrderCard from '../components/Dashboard/OrderCard';
 import ChatPanel from '../components/Dashboard/ChatPanel';
-import { MockPayModal, ReviewModal } from '../components/Dashboard/DashboardModals';
+import { MockPayModal, ReviewModal, UserDetailsModal } from '../components/Dashboard/DashboardModals';
 import ProductModal from '../components/Dashboard/ProductModal';
 import { API_BASE_URL as API } from '../api';
 
@@ -47,6 +47,7 @@ export default function Dashboard() {
   const [payModal, setPayModal] = useState(null);
   const [showReview, setShowReview] = useState(null);
   const [productModal, setProductModal] = useState({ isOpen: false, product: null });
+  const [selectedUserDetails, setSelectedUserDetails] = useState(null);
 
   
   // Refs
@@ -299,9 +300,13 @@ export default function Dashboard() {
      await fetch(`${API}/api/admin/suspend-user/${id}`, { 
        method: 'PUT', 
        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-       body: JSON.stringify({ suspend })
+       body: JSON.stringify({ isSuspended: suspend })
      });
      fetchAdminData();
+  };
+
+  const handleViewUserDetails = (userDetails) => {
+    setSelectedUserDetails(userDetails);
   };
 
   // ── Product CRUD Handlers ───────────────────────────────
@@ -360,6 +365,7 @@ export default function Dashboard() {
       {/* Modals */}
       {payModal && <MockPayModal amount={payModal.amount} label={`Order Payment`} onSuccess={handleMockPay} onClose={() => setPayModal(null)} />}
       {showReview && <ReviewModal order={showReview} onClose={() => setShowReview(null)} onSubmit={handleReviewSubmit} />}
+      {selectedUserDetails && <UserDetailsModal user={selectedUserDetails} onClose={() => setSelectedUserDetails(null)} />}
       <ProductModal 
         isOpen={productModal.isOpen} 
         product={productModal.product} 
@@ -413,7 +419,7 @@ export default function Dashboard() {
 
               {/* View Routing */}
               {view === 'profile' ? <ProfileSection user={user} myReviews={myReviews} API={API} setView={setView} /> :
-               view === 'admin' ? <AdminPanel stats={stats} pendingProducts={pendingProducts} allUsers={allUsers} pendingCompanies={pendingCompanies} page={page} setPage={setPage} handleApproveProduct={handleApproveProduct} handleSuspendUser={handleSuspendUser} approveCompany={approveCompany} API={API} /> :
+               view === 'admin' ? <AdminPanel stats={stats} pendingProducts={pendingProducts} allUsers={allUsers} pendingCompanies={pendingCompanies} page={page} setPage={setPage} handleApproveProduct={handleApproveProduct} handleSuspendUser={handleSuspendUser} handleViewUserDetails={handleViewUserDetails} approveCompany={approveCompany} API={API} /> :
                view === 'analytics' ? <AnalyticsView stats={stats} /> :
                isCompany && view === 'products' ? <InventoryManager myProducts={myProducts} openProductModal={openProductModal} deleteProduct={handleDeleteProduct} API={API} /> :
                (

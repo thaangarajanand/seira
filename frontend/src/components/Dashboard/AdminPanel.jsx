@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserCircle, Shield, ShieldAlert, Truck, Package, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const AdminPanel = ({ stats, pendingProducts, allUsers, pendingCompanies, page, setPage, handleApproveProduct, handleSuspendUser, approveCompany, API }) => {
+const AdminPanel = ({ stats, pendingProducts, allUsers, pendingCompanies, page, setPage, handleApproveProduct, handleSuspendUser, handleViewUserDetails, approveCompany, API }) => {
   return (
     <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column', gap: 24 }}>
       {/* Platform Stats Summary */}
@@ -87,7 +87,7 @@ const AdminPanel = ({ stats, pendingProducts, allUsers, pendingCompanies, page, 
                     {u.isSuspended ? 'Unsuspend' : 'Suspend'}
                   </button>
                 )}
-                <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '.75rem' }}>Details</button>
+                <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '.75rem' }} onClick={() => handleViewUserDetails(u)}>Details</button>
               </div>
             </div>
           ))}
