@@ -287,8 +287,24 @@ export default function Dashboard() {
   };
 
   const approveCompany = async (id) => {
-    await fetch(`${API}/api/admin/approve-company/${id}`, { method: 'PUT', headers: { 'Authorization': `Bearer ${token}` } });
-    fetchAdminData();
+    try {
+      const res = await fetch(`${API}/api/admin/approve-company/${id}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        alert(data.message || 'Company verified successfully');
+        fetchAdminData();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        alert(err.error || 'Failed to verify company');
+      }
+    } catch (err) {
+      console.error('Approve company failed:', err);
+      alert('Network error while verifying company');
+    }
   };
 
   const handleApproveProduct = async (id) => {
