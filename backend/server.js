@@ -15,12 +15,23 @@ const allowedOrigins = [
   'http://localhost:3000',
   process.env.FRONTEND_URL
 ].filter(Boolean);
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`Origin not allowed by CORS: ${origin}`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
 
 // CORS — allow frontend dev server
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 app.use(express.json());
 
 // Serve uploaded drawings as static files
@@ -29,8 +40,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
-    methods: ['GET', 'POST']
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`Socket origin not allowed by CORS: ${origin}`));
+    },
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 
