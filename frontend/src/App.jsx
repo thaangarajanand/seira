@@ -10,6 +10,7 @@ import Cart from './pages/Cart';
 import { useCart } from './context/CartContext';
 import { Terms, Privacy, Refund } from './pages/Legal';
 import ProductDetail from './pages/ProductDetail';
+import { API_BASE_URL } from './api';
 // ── Protected Route ────────────────────────────────────────
 function ProtectedRoute({ children }) {
   const { isLoggedIn, loading } = useAuth();
@@ -123,7 +124,7 @@ function HomeView() {
   const { isLoggedIn, isCompany } = useAuth();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/auth/top-company')
+    fetch(`${API_BASE_URL}/api/auth/top-company`)
       .then(res => res.json())
       .then(data => {
         if (data && data._id) setTopCompany(data);

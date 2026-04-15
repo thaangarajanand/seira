@@ -7,8 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-
-const API = 'http://localhost:5000';
+import { API_BASE_URL as API } from '../api';
 
 // ── Components (Sub-components) ───────────────────────────
 

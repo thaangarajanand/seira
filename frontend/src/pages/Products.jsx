@@ -3,8 +3,7 @@ import { ShoppingBag, Star, Zap, Search, Filter, UploadCloud, FileText, X, Spark
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-
-const API = 'http://localhost:5000';
+import { API_BASE_URL as API } from '../api';
 
 // ── Mock Payment Overlay ─────────────────────────────────
 function MockPayModal({ amount, productName, onSuccess, onClose }) {

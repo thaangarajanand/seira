@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Truck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-
-const API = 'http://localhost:5000';
+import { API_BASE_URL as API } from '../api';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);

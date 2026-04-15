@@ -3,8 +3,7 @@ import { Trash2, Plus, Minus, CreditCard, ShoppingBag, ArrowLeft } from 'lucide-
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-
-const API = 'http://localhost:5000';
+import { API_BASE_URL as API } from '../api';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, totalAmount, clearCart } = useCart();

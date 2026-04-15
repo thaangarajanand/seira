@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import { API_BASE_URL as API } from '../api';
 
 const CartContext = createContext();
-
-const API = 'http://localhost:5000';
 
 export function CartProvider({ children }) {
   const { token } = useAuth();

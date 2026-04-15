@@ -3,8 +3,7 @@ import { X, Trash2, Plus, Minus, CreditCard } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
-const API = 'http://localhost:5000';
+import { API_BASE_URL as API } from '../api';
 
 export default function CartDrawer() {
   const { cart, removeFromCart, updateQuantity, totalAmount, isCartOpen, setIsCartOpen, clearCart } = useCart();

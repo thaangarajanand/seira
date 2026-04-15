@@ -15,8 +15,7 @@ import OrderCard from '../components/Dashboard/OrderCard';
 import ChatPanel from '../components/Dashboard/ChatPanel';
 import { MockPayModal, ReviewModal } from '../components/Dashboard/DashboardModals';
 import ProductModal from '../components/Dashboard/ProductModal';
-
-const API = 'http://localhost:5000';
+import { API_BASE_URL as API } from '../api';
 
 export default function Dashboard() {
   const { user, token, isCompany } = useAuth();
