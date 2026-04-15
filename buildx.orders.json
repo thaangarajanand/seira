@@ -1,0 +1,147 @@
+[{
+  "_id": {
+    "$oid": "69d52362e48b545f4114766a"
+  },
+  "type": "custom",
+  "customer": {
+    "$oid": "69d5232fe48b545f41147669"
+  },
+  "company": {
+    "$oid": "69d52f162ac2689e4fb6672c"
+  },
+  "product": null,
+  "quantity": 1,
+  "drawings": [
+    "http://localhost:5000/uploads/1775575906402-WhatsApp-Image-2026-02-13-at-10.38.35.jpeg"
+  ],
+  "description": "a wild curved tube for water cooling pc",
+  "proposedRate": 20000,
+  "proposedDeliveryDate": {
+    "$date": "2026-04-29T00:00:00.000Z"
+  },
+  "finalRate": 20000,
+  "finalDeliveryDate": {
+    "$date": "2026-04-29T00:00:00.000Z"
+  },
+  "status": "completed",
+  "createdAt": {
+    "$date": "2026-04-07T15:31:46.409Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T07:18:58.459Z"
+  },
+  "__v": 0,
+  "paymentId": "mock_payment_1775719069538"
+},
+{
+  "_id": {
+    "$oid": "69d523cae48b545f4114766b"
+  },
+  "type": "standard",
+  "customer": {
+    "$oid": "69d5232fe48b545f41147669"
+  },
+  "company": null,
+  "product": {
+    "$oid": "69d50f722656eb15a43abf31"
+  },
+  "quantity": 1,
+  "drawings": [],
+  "proposedRate": 400,
+  "finalRate": 400,
+  "status": "shipped",
+  "createdAt": {
+    "$date": "2026-04-07T15:33:30.091Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T15:33:32.790Z"
+  },
+  "__v": 0,
+  "paymentId": "mock_payment_1775576012789"
+},
+{
+  "_id": {
+    "$oid": "69d755c08c5fc63459f174f5"
+  },
+  "type": "standard",
+  "customer": {
+    "$oid": "69d52f162ac2689e4fb6672c"
+  },
+  "company": null,
+  "product": {
+    "$oid": "69d753aa98ec02b33b10f240"
+  },
+  "quantity": 1,
+  "drawings": [],
+  "proposedRate": 400,
+  "finalRate": 400,
+  "status": "shipped",
+  "createdAt": {
+    "$date": "2026-04-09T07:31:12.538Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T07:31:12.552Z"
+  },
+  "__v": 0,
+  "paymentId": "mock_payment_1775719872551"
+},
+{
+  "_id": {
+    "$oid": "69d7b0f67689d45376cd8df0"
+  },
+  "type": "standard",
+  "customer": {
+    "$oid": "69d5232fe48b545f41147669"
+  },
+  "company": null,
+  "product": {
+    "$oid": "69d7ae7eaabf282b12acb86c"
+  },
+  "quantity": 1,
+  "drawings": [],
+  "proposedRate": 1500,
+  "finalRate": 1500,
+  "status": "shipped",
+  "createdAt": {
+    "$date": "2026-04-09T14:00:22.531Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T14:00:24.846Z"
+  },
+  "__v": 0,
+  "paymentId": "mock_payment_1775743224845"
+},
+{
+  "_id": {
+    "$oid": "69d7b490e9640b4f897a39d8"
+  },
+  "type": "custom",
+  "customer": {
+    "$oid": "69d5232fe48b545f41147669"
+  },
+  "company": {
+    "$oid": "69d532262d90d4ddeb57d733"
+  },
+  "product": {
+    "$oid": "69d7ae7eaabf282b12acb86c"
+  },
+  "quantity": 1,
+  "drawings": [
+    "http://localhost:5000/uploads/1775744143904-4269535.jpg"
+  ],
+  "description": "**Product Customization Requirements:**\n\nBased on the initial notes, the refined customization requirements for the product are as follows:\n\n* **Material Selection:**\n  * Tungsten Head: Tungsten Carbide (WC) grade, providing high hardness and wear resistance\n  * Steel Body: AISI 4140, a high-strength, low-alloy steel for durability and toughness\n  * Rubber Handle: Nitrile Butadiene Rubber (NBR), offering excellent resistance to oil and abrasion\n* **Dimensions and Tolerances:**\n  * Dimensions: 120 x 34 x 48 mm\n  * Standard Tolerances: ±0.5 mm for length, width, and height\n* **Surface Finish:**\n  * Tungsten Head: Ground finish, Ra 0.8 μm\n  * Steel Body: Powder coated, texture Rz 10 μm\n  * Rubber Handle: Smooth finish, texture Rz 2 μm\n* **Quality Checks:**\n  * Dimensional inspection\n  * Material verification\n  * Functional testing (torque and impact resistance)\n  * Visual inspection for surface finish and defects\n\nThese specifications ensure a robust and durable product with a high-quality finish, meeting the requirements for industrial manufacturing.",
+  "proposedRate": 18000,
+  "proposedDeliveryDate": {
+    "$date": "2026-05-05T00:00:00.000Z"
+  },
+  "finalRate": null,
+  "finalDeliveryDate": null,
+  "status": "pending",
+  "createdAt": {
+    "$date": "2026-04-09T14:15:44.277Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T14:15:44.277Z"
+  },
+  "__v": 0
+}]

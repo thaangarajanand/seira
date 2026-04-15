@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "69d4d7d625a492b369cee154"
+  },
+  "name": "BuildX Super Supplier",
+  "email": "admin_vendor@buildx.com",
+  "password": "secretdummypassword",
+  "role": "company",
+  "companyName": "BuildX System Factory",
+  "portfolioImages": [],
+  "completedOrdersCount": 200,
+  "averageRating": 4.9,
+  "createdAt": {
+    "$date": "2026-04-07T10:09:26.498Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:09:26.498Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d5232fe48b545f41147669"
+  },
+  "name": "hariharan",
+  "email": "jayaj1843@gmail.com",
+  "password": "$2b$10$PTV6DBrkIJKCBL6kHdcJVOD/rRSk1.h8FKhz1.D7yBR9bI0WqgOs6",
+  "role": "customer",
+  "portfolioImages": [],
+  "completedOrdersCount": 0,
+  "averageRating": 0,
+  "createdAt": {
+    "$date": "2026-04-07T15:30:55.547Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T14:16:13.913Z"
+  },
+  "__v": 0,
+  "preferredLanguage": "ta"
+},
+{
+  "_id": {
+    "$oid": "69d52f162ac2689e4fb6672c"
+  },
+  "name": "Hariharang",
+  "email": "hariharang289@gmail.com",
+  "password": "$2b$10$SZ0z8HyQgansXm4hPWlrW.LxKJJP5xiaFVAh.Q3NAocH/W18wkJl6",
+  "role": "company",
+  "companyName": "Halo",
+  "portfolioImages": [],
+  "completedOrdersCount": 1,
+  "averageRating": 0,
+  "createdAt": {
+    "$date": "2026-04-07T16:21:42.066Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T07:18:58.456Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d532262d90d4ddeb57d733"
+  },
+  "name": "Sai Elite",
+  "email": "sailite@buildx.com",
+  "password": "$2b$10$ZzLeEC9epg/lhDYezTwjsOTPQNVA3UP7COVB7T2EaZFRlMBCpsCXy",
+  "role": "company",
+  "companyName": "Sai Elite India",
+  "portfolioImages": [],
+  "completedOrdersCount": 0,
+  "averageRating": 0,
+  "createdAt": {
+    "$date": "2026-04-07T16:34:46.214Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T16:34:46.214Z"
+  },
+  "__v": 0
+}]

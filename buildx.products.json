@@ -1,0 +1,2018 @@
+[
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb86b"
+    },
+    "name": "Oil Filter",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 300,
+    "imageUrl": "/images/auto_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.500Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.500Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb86c"
+    },
+    "name": "Brake Pads Front",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 1500,
+    "imageUrl": "/images/auto_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb86d"
+    },
+    "name": "Air Filter",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 400,
+    "imageUrl": "/images/auto_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb86e"
+    },
+    "name": "Spark Plugs",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 200,
+    "imageUrl": "/images/auto_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb86f"
+    },
+    "name": "Wiper Blades",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 500,
+    "imageUrl": "/images/auto_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb870"
+    },
+    "name": "Clutch Plate Kit",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 5000,
+    "imageUrl": "/images/auto_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb871"
+    },
+    "name": "Shock Absorbers",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 3000,
+    "imageUrl": "/images/auto_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb872"
+    },
+    "name": "Wheel Bearing",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 1200,
+    "imageUrl": "/images/auto_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb873"
+    },
+    "name": "Head Lamp Bulb",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 500,
+    "imageUrl": "/images/auto_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb874"
+    },
+    "name": "Battery",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 7000,
+    "imageUrl": "/images/auto_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb875"
+    },
+    "name": "Radiator",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 6000,
+    "imageUrl": "/images/auto_11.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb876"
+    },
+    "name": "Engine Valves",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 400,
+    "imageUrl": "/images/auto_12.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb877"
+    },
+    "name": "Fuel Filter",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 500,
+    "imageUrl": "/images/auto_13.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb878"
+    },
+    "name": "Timing Belt",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 1500,
+    "imageUrl": "/images/auto_14.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb879"
+    },
+    "name": "Alternator",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 10000,
+    "imageUrl": "/images/auto_15.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb87a"
+    },
+    "name": "Starter Motor",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 8000,
+    "imageUrl": "/images/auto_16.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb87b"
+    },
+    "name": "Brake Disc",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 3000,
+    "imageUrl": "/images/auto_17.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb87c"
+    },
+    "name": "Suspension Bush",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 300,
+    "imageUrl": "/images/auto_18.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb87d"
+    },
+    "name": "AC Compressor",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 25000,
+    "imageUrl": "/images/auto_19.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb87e"
+    },
+    "name": "Side Mirror",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 2000,
+    "imageUrl": "/images/auto_20.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb87f"
+    },
+    "name": "Piston Liners and Rings",
+    "description": "Automobile Parts — standard product available for immediate order or customisation request.",
+    "price": 8000,
+    "imageUrl": "/images/auto_21.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb880"
+    },
+    "name": "Orthopedic Bone Screws",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 1500,
+    "imageUrl": "/images/medical_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb881"
+    },
+    "name": "Dental Implants (Titanium)",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 10000,
+    "imageUrl": "/images/medical_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb882"
+    },
+    "name": "Insulin Pen Needles",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 30,
+    "imageUrl": "/images/medical_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb883"
+    },
+    "name": "Surgical Staples (Titanium)",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 2000,
+    "imageUrl": "/images/medical_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb884"
+    },
+    "name": "Catheter Tips & Connectors",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 50,
+    "imageUrl": "/images/medical_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb885"
+    },
+    "name": "Hypodermic Needles",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 10,
+    "imageUrl": "/images/medical_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb886"
+    },
+    "name": "Stent (Cardiac)",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 80000,
+    "imageUrl": "/images/medical_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb887"
+    },
+    "name": "Microfluidic Chips",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 5000,
+    "imageUrl": "/images/medical_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb888"
+    },
+    "name": "Surgical Valve Parts",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 50000,
+    "imageUrl": "/images/medical_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb889"
+    },
+    "name": "Prosthetic Joint Pins/Bolts",
+    "description": "Medical Devices — standard product available for immediate order or customisation request.",
+    "price": 8000,
+    "imageUrl": "/images/medical_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb88a"
+    },
+    "name": "Aerospace Rivets",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 20,
+    "imageUrl": "/images/aerospace_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb88b"
+    },
+    "name": "Titanium Bolts (Grade 5)",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 150,
+    "imageUrl": "/images/aerospace_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb88c"
+    },
+    "name": "Fuel Injector Nozzles",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 8000,
+    "imageUrl": "/images/aerospace_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb88d"
+    },
+    "name": "Turbine Blade (Small)",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 25000,
+    "imageUrl": "/images/aerospace_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb88e"
+    },
+    "name": "Hydraulic Fittings",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 2000,
+    "imageUrl": "/images/aerospace_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb88f"
+    },
+    "name": "Bushing & Bearing",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 3500,
+    "imageUrl": "/images/aerospace_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb890"
+    },
+    "name": "Sensor Housing",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 5000,
+    "imageUrl": "/images/aerospace_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb891"
+    },
+    "name": "Manifolds",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 12000,
+    "imageUrl": "/images/aerospace_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb892"
+    },
+    "name": "Connector",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 800,
+    "imageUrl": "/images/aerospace_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb893"
+    },
+    "name": "Shim Stock",
+    "description": "Aerospace — standard product available for immediate order or customisation request.",
+    "price": 1500,
+    "imageUrl": "/images/aerospace_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb894"
+    },
+    "name": "T-Beams / I-Beams (Custom)",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 120,
+    "imageUrl": "/images/welding_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb895"
+    },
+    "name": "Automobile Chassis Frames",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 135,
+    "imageUrl": "/images/welding_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb896"
+    },
+    "name": "Pressure Vessel Shell",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 210,
+    "imageUrl": "/images/welding_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb897"
+    },
+    "name": "Sheet Metal Enclosures",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 250,
+    "imageUrl": "/images/welding_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb898"
+    },
+    "name": "Storage Tank Panels",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 130,
+    "imageUrl": "/images/welding_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb899"
+    },
+    "name": "Pipe Spools (Industrial)",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 155,
+    "imageUrl": "/images/welding_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb89a"
+    },
+    "name": "Common Precision Parts",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 490,
+    "imageUrl": "/images/welding_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb89b"
+    },
+    "name": "Flanges & Catwalks",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 100,
+    "imageUrl": "/images/welding_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb89c"
+    },
+    "name": "Pallet Racks (Warehouse)",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 130,
+    "imageUrl": "/images/welding_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb89d"
+    },
+    "name": "Transformer Tanks",
+    "description": "Welding & Fabrication — standard product available for immediate order or customisation request.",
+    "price": 170,
+    "imageUrl": "/images/welding_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb89e"
+    },
+    "name": "Safety Equipment (PPE)",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 500,
+    "imageUrl": "https://ui-avatars.com/api/?name=S&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb89f"
+    },
+    "name": "Industrial Fasteners",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 10,
+    "imageUrl": "https://ui-avatars.com/api/?name=I&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a0"
+    },
+    "name": "Consumables & Chemicals",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 1000,
+    "imageUrl": "https://ui-avatars.com/api/?name=C&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a1"
+    },
+    "name": "Packaging Material",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 50,
+    "imageUrl": "https://ui-avatars.com/api/?name=P&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a2"
+    },
+    "name": "Abrasives & Welding Supplies",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 300,
+    "imageUrl": "https://ui-avatars.com/api/?name=A&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a3"
+    },
+    "name": "Electrical Switchgear",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 2500,
+    "imageUrl": "https://ui-avatars.com/api/?name=E&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a4"
+    },
+    "name": "Bearing & Power Transmission",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 1500,
+    "imageUrl": "https://ui-avatars.com/api/?name=B&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a5"
+    },
+    "name": "Hand & Power Tools",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 3000,
+    "imageUrl": "https://ui-avatars.com/api/?name=H&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a6"
+    },
+    "name": "Pneumatic Components",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 2000,
+    "imageUrl": "https://ui-avatars.com/api/?name=P&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a7"
+    },
+    "name": "Material Handling Spares",
+    "description": "Industrial Supplies — standard product available for immediate order or customisation request.",
+    "price": 5000,
+    "imageUrl": "https://ui-avatars.com/api/?name=M&background=0D9488&color=fff&size=200",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a8"
+    },
+    "name": "Drill Bushing",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 420,
+    "imageUrl": "/images/dies_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8a9"
+    },
+    "name": "Locating Pin",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 1150,
+    "imageUrl": "/images/dies_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8aa"
+    },
+    "name": "Toggle Clamp",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 980,
+    "imageUrl": "/images/dies_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8ab"
+    },
+    "name": "Die Spring",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 185,
+    "imageUrl": "/images/dies_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8ac"
+    },
+    "name": "Guide Pillar Set",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 4200,
+    "imageUrl": "/images/dies_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8ad"
+    },
+    "name": "Shoulder Bolt",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 145,
+    "imageUrl": "/images/dies_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8ae"
+    },
+    "name": "Ball Plunger",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 95,
+    "imageUrl": "/images/dies_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8af"
+    },
+    "name": "Rest Button",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 310,
+    "imageUrl": "/images/dies_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b0"
+    },
+    "name": "Pneumatic Swing Clamp",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 8400,
+    "imageUrl": "/images/dies_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b1"
+    },
+    "name": "T-Slot Bolt Kit",
+    "description": "Dies, Jigs & Fixtures — standard product available for immediate order or customisation request.",
+    "price": 2800,
+    "imageUrl": "/images/dies_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b2"
+    },
+    "name": "Inductive Proximity Sensors (M12/M18)",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 850,
+    "imageUrl": "/images/automation_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b3"
+    },
+    "name": "Solenoid Valves (5/2 Way)",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 2200,
+    "imageUrl": "/images/automation_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b4"
+    },
+    "name": "Pneumatic Cylinders (ISO Standard)",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 4500,
+    "imageUrl": "/images/automation_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b5"
+    },
+    "name": "SMPS (24V DC)",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 1850,
+    "imageUrl": "/images/automation_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b6"
+    },
+    "name": "PLC (Programmable Logic Controller)",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 11500,
+    "imageUrl": "/images/automation_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b7"
+    },
+    "name": "AC Variable Frequency Drives (VFD)",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 9800,
+    "imageUrl": "/images/automation_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b8"
+    },
+    "name": "Photoelectric Sensors",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 3200,
+    "imageUrl": "/images/automation_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8b9"
+    },
+    "name": "Industrial Relay Modules",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 850,
+    "imageUrl": "/images/automation_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8ba"
+    },
+    "name": "Servo Motors & Drives",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 18500,
+    "imageUrl": "/images/automation_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8bb"
+    },
+    "name": "HMI Touchscreen (7\"/10\")",
+    "description": "Industrial Automation — standard product available for immediate order or customisation request.",
+    "price": 10500,
+    "imageUrl": "/images/automation_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8bc"
+    },
+    "name": "Turbine Blades",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 85000,
+    "imageUrl": "/images/precision_1.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8bd"
+    },
+    "name": "Landing Gear Bushing",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 12000,
+    "imageUrl": "/images/precision_2.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8be"
+    },
+    "name": "Aerospace Fasteners",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 28000,
+    "imageUrl": "/images/precision_3.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8bf"
+    },
+    "name": "Fuel Manifold Nozzles",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 42000,
+    "imageUrl": "/images/precision_4.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c0"
+    },
+    "name": "Avionics Enclosure",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 55000,
+    "imageUrl": "/images/precision_5.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c1"
+    },
+    "name": "Hydraulic Actuator Piston",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 18000,
+    "imageUrl": "/images/precision_6.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c2"
+    },
+    "name": "Engine Mounting Brackets",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 32000,
+    "imageUrl": "/images/precision_7.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c3"
+    },
+    "name": "Impellers (Centrifugal)",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 110000,
+    "imageUrl": "/images/precision_8.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c4"
+    },
+    "name": "TIG Welding Machine",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 185000,
+    "imageUrl": "/images/precision_9.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c5"
+    },
+    "name": "Fiber Laser Cutting Machine",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 3850000,
+    "imageUrl": "/images/precision_10.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c6"
+    },
+    "name": "CNC 5-Axis Machining Center",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 12500000,
+    "imageUrl": "/images/precision_11.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c7"
+    },
+    "name": "Orbital Welding System",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 1240000,
+    "imageUrl": "/images/precision_12.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c8"
+    },
+    "name": "CNC Press Brake",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 2200000,
+    "imageUrl": "/images/precision_13.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8c9"
+    },
+    "name": "Plasma Cutting Machine",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 850000,
+    "imageUrl": "/images/precision_14.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69d7ae7eaabf282b12acb8ca"
+    },
+    "name": "Vacuum Heat Treatment Furnace",
+    "description": "Precision Machinery — standard product available for immediate order or customisation request.",
+    "price": 4500000,
+    "imageUrl": "/images/precision_15.png",
+    "companyId": {
+      "$oid": "69d532262d90d4ddeb57d733"
+    },
+    "averageRating": 0,
+    "reviewCount": 0,
+    "__v": 0,
+    "createdAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    },
+    "updatedAt": {
+      "$date": "2026-04-09T13:49:50.503Z"
+    }
+  }
+]
