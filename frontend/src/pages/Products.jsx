@@ -40,16 +40,11 @@ function CustomizeModal({ product, onClose, token }) {
   const [form, setForm] = useState({ proposedRate: product.price || '', expectedDate: '', description: '', quantity: 1, dimensions: '' });
   const [error, setError] = useState('');
   const [dragOver, setDragOver] = useState(false);
-  const [topCompany, setTopCompany] = useState(null);
+  // topCompany state removed as it was unused
   const fileRef = useRef();
   const { addToCart } = useCart();
 
-  useEffect(() => {
-    fetch(`${API}/api/auth/top-company`)
-      .then(r => r.json())
-      .then(c => { if(c && c._id !== product.companyId._id) setTopCompany(c) })
-      .catch(()=>{});
-  }, [product.companyId]);
+  // useEffect for topCompany removed as it was unused
 
   const update = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }));
 
@@ -91,7 +86,7 @@ function CustomizeModal({ product, onClose, token }) {
     }
   };
 
-  const handleSubmit = async (e, forceCompanyId = null) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     if (files.length === 0) {
@@ -341,7 +336,7 @@ export default function Products() {
       theme: { color: '#0D9488' }
     };
     new window.Razorpay(options).open();
-  }, [verifyPayment]);
+  }, [verifyPayment, handlePaymentFailure]);
 
   const handleBuy = useCallback(async (product) => {
     if (!token) {

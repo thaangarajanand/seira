@@ -161,7 +161,7 @@ export default function Cart() {
                     </span>
                   </div>
                   <p style={{ color: 'var(--slate-500)', fontSize: '.9rem', marginBottom: 8 }}>
-                    ₹{(item.type === 'custom' ? item.customData?.proposedRate : item.price).toLocaleString('en-IN')}
+                    ₹{(item.type === 'custom' ? (item.customData?.proposedRate ?? 0) : (item.price ?? 0)).toLocaleString('en-IN')}
                   </p>
 
                   {item.type === 'custom' && (

@@ -16,7 +16,7 @@ export function CartProvider({ children }) {
       return [];
     }
   });
-  const [loading, setLoading] = useState(false); // Initialized to false as we load sync now
+  // loading state removed as it was unused
 
   // 2. Sync with Backend on Login
   useEffect(() => {
@@ -62,9 +62,10 @@ export function CartProvider({ children }) {
     localStorage.setItem('SEIRA-cart', JSON.stringify(cart));
   }, [cart]);
 
-  // 4. Handle Logout/Token Change properly via useEffect
   useEffect(() => {
     if (!token) {
+      // Clear cart on logout. This is intentional state synchronization.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCart([]);
       localStorage.removeItem('SEIRA-cart');
     }
@@ -159,7 +160,7 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider value={{
-      cart, addToCart, removeFromCart, updateQuantity, clearCart, totalAmount, loading
+      cart, addToCart, removeFromCart, updateQuantity, clearCart, totalAmount
     }}>
       {children}
     </CartContext.Provider>
