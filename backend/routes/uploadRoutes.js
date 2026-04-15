@@ -4,14 +4,16 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const authMiddleware = require('../middleware/authMiddleware');
+const { storage: cloudinaryStorage, isCloudinaryConfigured } = require('../config/cloudinary');
 
-// Ensure uploads directory exists
+// Ensure uploads directory exists for local fallback
 const uploadsDir = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-const storage = multer.diskStorage({
+// Local Storage Fallback
+const localStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadsDir),
   filename: (req, file, cb) => {
     const safeName = file.originalname.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9.\-_]/g, '');
@@ -25,19 +27,27 @@ const fileFilter = (req, file, cb) => {
   else cb(new Error('Only images and PDFs are allowed'), false);
 };
 
+// Use Cloudinary if configured, otherwise local disk
+const storage = isCloudinaryConfigured ? cloudinaryStorage : localStorage;
+
 const upload = multer({
   storage,
   fileFilter,
   limits: { fileSize: 10 * 1024 * 1024 } // 10MB
 });
 
-// POST /api/upload — Upload up to 5 drawing files
+// POST /api/upload — Upload files (Cloudinary or Local)
 router.post('/', authMiddleware, upload.array('drawings', 5), (req, res) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ error: 'No files uploaded' });
   }
 
-  const urls = req.files.map(f => `/uploads/${f.filename}`);
+  const urls = req.files.map(f => {
+    // Cloudinary file objects have 'path' or 'secure_url'
+    // Local file objects have 'filename' (we constructed the URL)
+    return isCloudinaryConfigured ? f.path : `/uploads/${f.filename}`;
+  });
+  
   res.json({ urls, count: urls.length });
 });
 

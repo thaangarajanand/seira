@@ -120,6 +120,7 @@ function App() {
 // ── Home View ───────────────────────────────────────────────
 function HomeView() {
   const [topCompany, setTopCompany] = useState(null);
+  const { isLoggedIn, isCompany } = useAuth();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/auth/top-company')
@@ -133,33 +134,33 @@ function HomeView() {
   const features = [
     {
       icon: <ShoppingBag size={28} />,
-      title: 'Standard Catalog',
-      desc: 'Browse 100+ industrial products from verified manufacturers. Instant Razorpay checkout.'
+      title: 'Industrial Catalog',
+      desc: 'Source 100+ standard industrial products from verified manufacturers with ease.'
     },
     {
       icon: <Zap size={28} />,
       title: 'Custom Manufacturing',
-      desc: 'Upload technical drawings. Set your rate & delivery date. Companies bid for your job.'
+      desc: 'Upload drawings, specify material needs, and let vendors compete for your project.'
     },
     {
       icon: <Shield size={28} />,
-      title: 'Price Negotiation',
-      desc: 'Real-time negotiation with AI-assisted suggestions. Accept or counter any offer.'
+      title: 'Secure Procurement',
+      desc: 'Multi-stage payment protection. Money is only released upon your delivery confirmation.'
     },
     {
       icon: <Star size={28} />,
-      title: 'Verified Vendors',
-      desc: 'Star ratings, portfolio, and order completion counts ensure you pick the best.'
+      title: 'Verified Partners',
+      desc: 'Detailed vendor portfolios, ratings, and order history help you pick the right factory.'
     },
     {
       icon: <Clock size={28} />,
-      title: 'Live Tracking',
-      desc: 'Real-time GPS location tracking from dispatch to doorstep. Know where your order is.'
+      title: 'Visual Tracking',
+      desc: 'Watch your order move from the factory floor to your doorstep with live GPS tracking.'
     },
     {
-      icon: <UserCircle size={28} />,
-      title: 'Secure Payments',
-      desc: 'Razorpay-powered payments. Money is only released after you confirm delivery.'
+      icon: <Award size={28} />,
+      title: 'Quality Guaranteed',
+      desc: 'Standardized quality checks and community reviews ensure industrial-grade excellence.'
     }
   ];
 
@@ -167,42 +168,53 @@ function HomeView() {
     <div className="home">
       {/* Hero */}
       <section className="hero">
-        <div className="hero-badge">🚀 India's #1 Manufacturing Marketplace</div>
+        <div className="hero-badge">🏭 India's Premier Industrial B2B Marketplace</div>
         <h1 className="hero-title">
-          Manufacturing Meets
-          <span className="gradient-text"> AI</span>
+          Scale Your Production
+          <span className="gradient-text"> Faster</span>
         </h1>
         <p className="hero-sub">
-          Order standard industrial products or upload custom drawings to negotiate exact rates
-          and delivery terms with top-tier verified vendors — all in real time.
+          The smart way for procurement teams to source standard parts or commission custom 
+          manufacturing. Negotiate directly with verified vendors in real-time.
         </p>
-        <div className="hero-actions">
+        <div className="hero-actions" style={{ justifyContent: 'center' }}>
           <Link to="/products" className="btn-primary">
-            Browse Catalog <ChevronRight size={18} />
+            Browse All Products <ChevronRight size={18} />
           </Link>
-
+          
+          {isCompany ? (
+             <Link to="/dashboard" className="btn-secondary">
+               Go to Manufacturer Dashboard
+             </Link>
+          ) : (
+             !isLoggedIn && (
+               <Link to="/login" className="btn-secondary">
+                 Manufacturer? Start Selling
+               </Link>
+             )
+          )}
         </div>
 
         {/* Stats */}
         <div className="stats-row">
           <div className="stat-item">
-            <span className="stat-num">Quality</span>
-            <span className="stat-label">Products</span>
+            <span className="stat-num">Precision</span>
+            <span className="stat-label">Engineering</span>
           </div>
           <div className="stat-divider" />
           <div className="stat-item">
-            <span className="stat-num">Trusted</span>
-            <span className="stat-label">Vendors</span>
+            <span className="stat-num">Verified</span>
+            <span className="stat-label">Factories</span>
           </div>
           <div className="stat-divider" />
           <div className="stat-item">
-            <span className="stat-num">Highly</span>
-            <span className="stat-label">Rated</span>
+            <span className="stat-num">Real-time</span>
+            <span className="stat-label">Negotiation</span>
           </div>
           <div className="stat-divider" />
           <div className="stat-item">
             <span className="stat-num">Secure</span>
-            <span className="stat-label">Payments</span>
+            <span className="stat-label">Logistics</span>
           </div>
         </div>
       </section>
@@ -210,8 +222,8 @@ function HomeView() {
       {/* Features */}
       <section className="features-section">
         <div className="section-header">
-          <h2>Everything You Need</h2>
-          <p>From standard parts to complex custom manufacturing — we handle it all.</p>
+          <h2>Streamlined Industrial Sourcing</h2>
+          <p>Everything you need to manage your manufacturing supply chain in one place.</p>
         </div>
         <div className="features-grid">
           {features.map((f, i) => (
@@ -230,9 +242,9 @@ function HomeView() {
           <div className="section-header">
             <h2 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
               <Award size={32} color="var(--amber-500)" />
-              Top Rated Vendor
+              Sourcing Spotlight
             </h2>
-            <p>We connect you directly to India's best manufacturing companies.</p>
+            <p>Connect with our highest-rated manufacturing partners.</p>
           </div>
           <div style={{ maxWidth: 600, margin: '0 auto', background: '#fff', borderRadius: '16px', padding: '24px', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', textAlign: 'center' }}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: 8 }}>{topCompany.companyName}</h3>
@@ -245,10 +257,10 @@ function HomeView() {
               </span>
             </div>
             <p style={{ color: 'var(--slate-600)', marginBottom: 20 }}>
-              {topCompany.companyName} is highly recommended by {topCompany.completedOrdersCount} clients for their excellent quality and prompt delivery. You can assign custom orders directly to them during checkout!
+              {topCompany.companyName} is recognized for precision and reliability. Procurement teams trust them for both standard parts and complex custom manufacturing projects.
             </p>
             <Link to="/products" className="btn-primary" style={{ display: 'inline-flex', margin: '0 auto' }}>
-              Browse Catalog
+              View Catalog
             </Link>
           </div>
         </section>
@@ -257,14 +269,14 @@ function HomeView() {
       {/* CTA Banner */}
       <section className="cta-section">
         <div className="cta-content">
-          <h2>Ready to manufacture smarter?</h2>
-          <p>Join thousands of engineers and procurement teams who trust SEIRA.</p>
-          <div className="hero-actions">
+          <h2>Ready to revolutionize your production?</h2>
+          <p>Join India's most advanced industrial marketplace today.</p>
+          <div className="hero-actions" style={{ justifyContent: 'center' }}>
             <Link to="/login" className="btn-primary">
-              Get Started Free <ChevronRight size={18} />
+              Get Started for Free <ChevronRight size={18} />
             </Link>
             <Link to="/products" className="btn-secondary">
-              Browse Products
+              Explore Marketplace
             </Link>
           </div>
         </div>

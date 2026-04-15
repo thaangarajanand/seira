@@ -14,6 +14,7 @@ import InventoryManager from '../components/Dashboard/InventoryManager';
 import OrderCard from '../components/Dashboard/OrderCard';
 import ChatPanel from '../components/Dashboard/ChatPanel';
 import { MockPayModal, ReviewModal } from '../components/Dashboard/DashboardModals';
+import ProductModal from '../components/Dashboard/ProductModal';
 
 const API = 'http://localhost:5000';
 
@@ -46,6 +47,7 @@ export default function Dashboard() {
   // Modal States
   const [payModal, setPayModal] = useState(null);
   const [showReview, setShowReview] = useState(null);
+  const [productModal, setProductModal] = useState({ isOpen: false, product: null });
 
   
   // Refs
@@ -303,6 +305,54 @@ export default function Dashboard() {
      fetchAdminData();
   };
 
+  // ── Product CRUD Handlers ───────────────────────────────
+  const openProductModal = (mode, product = null) => {
+    setProductModal({ isOpen: true, product });
+  };
+
+  const handleSaveProduct = async (formData, productId = null) => {
+    try {
+      const url = productId ? `${API}/api/products/${productId}` : `${API}/api/products`;
+      const method = productId ? 'PUT' : 'POST';
+      
+      const res = await fetch(url, {
+        method,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        alert(productId ? 'Product updated successfully!' : 'Product listed successfully!');
+        fetchProducts();
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Failed to save product');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error');
+    }
+  };
+
+  const handleDeleteProduct = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this industrial part? This cannot be undone.')) return;
+    try {
+      const res = await fetch(`${API}/api/products/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        alert('Product removed from inventory');
+        fetchProducts();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (loading) return <div className="loading-screen"><div className="spinner"/></div>;
 
   return (
@@ -311,6 +361,14 @@ export default function Dashboard() {
       {/* Modals */}
       {payModal && <MockPayModal amount={payModal.amount} label={`Order Payment`} onSuccess={handleMockPay} onClose={() => setPayModal(null)} />}
       {showReview && <ReviewModal order={showReview} onClose={() => setShowReview(null)} onSubmit={handleReviewSubmit} />}
+      <ProductModal 
+        isOpen={productModal.isOpen} 
+        product={productModal.product} 
+        onClose={() => setProductModal({ isOpen: false, product: null })} 
+        onSave={handleSaveProduct}
+        API={API}
+        token={token}
+      />
 
       <div style={{ display: 'flex', gap: 24, minHeight: '80vh', position: 'relative' }}>
         
@@ -336,7 +394,7 @@ export default function Dashboard() {
               <p style={{ color: 'var(--slate-500)', margin: 0 }}>Welcome back, <span className="text-teal font-bold">{user.name}</span></p>
             </div>
             {isCompany && view === 'products' && (
-              <button className="btn-primary" onClick={() => alert('Product addition integration coming soon!')}>+ Add New Product</button>
+              <button className="btn-primary" onClick={() => openProductModal('add')}>+ Add New Product</button>
             )}
           </div>
 
@@ -358,7 +416,7 @@ export default function Dashboard() {
               {view === 'profile' ? <ProfileSection user={user} myReviews={myReviews} API={API} setView={setView} /> :
                view === 'admin' ? <AdminPanel stats={stats} pendingProducts={pendingProducts} allUsers={allUsers} pendingCompanies={pendingCompanies} page={page} setPage={setPage} handleApproveProduct={handleApproveProduct} handleSuspendUser={handleSuspendUser} approveCompany={approveCompany} API={API} /> :
                view === 'analytics' ? <AnalyticsView stats={stats} /> :
-               isCompany && view === 'products' ? <InventoryManager myProducts={myProducts} openProductModal={() => alert('Product addition integration coming soon!')} API={API} /> :
+               isCompany && view === 'products' ? <InventoryManager myProducts={myProducts} openProductModal={openProductModal} deleteProduct={handleDeleteProduct} API={API} /> :
                (
                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                     {orders.length === 0 ? (
