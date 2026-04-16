@@ -14,6 +14,13 @@ export default function UserHome() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(!!token);
   const [orders, setOrders] = useState([]);
+  
+  // Adjust state during render to avoid cascading renders in useEffect
+  const [prevToken, setPrevToken] = useState(token);
+  if (token !== prevToken) {
+    setPrevToken(token);
+    setLoading(!!token);
+  }
 
   useEffect(() => {
     // Fetch products for featured section
@@ -28,7 +35,6 @@ export default function UserHome() {
 
     // Fetch orders to show stats
     if (token) {
-      setLoading(true);
       fetch(`${API}/api/orders`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
