@@ -143,10 +143,6 @@ function HomeView() {
   const [topCompany, setTopCompany] = useState(null);
   const { isLoggedIn, isCompany, user } = useAuth();
 
-  if (isLoggedIn && user?.role === 'customer') {
-    return <UserHome />;
-  }
-
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/auth/top-company`)
       .then(res => res.json())
@@ -155,6 +151,10 @@ function HomeView() {
       })
       .catch(() => {});
   }, []);
+
+  if (isLoggedIn && user?.role === 'customer') {
+    return <UserHome />;
+  }
 
   const features = [
     {

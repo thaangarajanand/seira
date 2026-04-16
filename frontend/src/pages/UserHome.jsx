@@ -12,7 +12,7 @@ export default function UserHome() {
   const { user, token } = useAuth();
   const { cart } = useCart();
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!!token);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export default function UserHome() {
 
     // Fetch orders to show stats
     if (token) {
+      setLoading(true);
       fetch(`${API}/api/orders`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
@@ -37,8 +38,6 @@ export default function UserHome() {
         })
         .catch(console.error)
         .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
     }
   }, [token]);
 
