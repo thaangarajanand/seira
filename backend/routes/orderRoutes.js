@@ -111,7 +111,7 @@ router.post('/', authMiddleware, async (req, res) => {
       proposedRate: Number(proposedRate),
       proposedDeliveryDate,
       quantity: Number(quantity) || 1,
-      status: type === 'standard' ? 'accepted' : 'pending',
+      status: 'pending_approval',
       finalRate: type === 'standard' ? Number(proposedRate) : null,
       finalDeliveryDate: type === 'standard' ? proposedDeliveryDate : null
     });
@@ -239,7 +239,7 @@ router.put('/:id/reject', authMiddleware, async (req, res) => {
 router.put('/:id/status', authMiddleware, otpLimiter, async (req, res) => {
   try {
     const { status, otp } = req.body;
-    const allowedStatuses = ['pending', 'negotiating', 'accepted', 'processing', 'quality_check', 'shipped', 'out_for_delivery', 'completed', 'cancelled'];
+    const allowedStatuses = ['pending', 'pending_approval', 'negotiating', 'accepted', 'processing', 'quality_check', 'shipped', 'out_for_delivery', 'completed', 'cancelled', 'payment_failed'];
     if (!allowedStatuses.includes(status)) {
       return res.status(400).json({ error: 'Invalid status' });
     }

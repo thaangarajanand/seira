@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find({ isApproved: true }).populate('companyId', 'name companyName averageRating completedOrdersCount portfolioImages');
+    const products = await Product.find({}).populate('companyId', 'name companyName averageRating completedOrdersCount portfolioImages');
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });

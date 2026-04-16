@@ -45,8 +45,8 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-inner">
         <Link to={homeLink} className="navbar-brand">
-          <img src="/logo.jpeg" alt="SEIRA" className="brand-logo" style={{ height: '32px', borderRadius: '4px' }} />
-          <span>SEIRA <span style={{ fontWeight: 400, opacity: 0.6, fontSize: '0.8em' }}>Industrial</span></span>
+          <img src="/logo.jpeg" alt="SEIRA" className="brand-logo" style={{ height: '48px', borderRadius: '8px' }} />
+          <span>SEIRA</span>
         </Link>
 
         <div className="navbar-links">
@@ -75,7 +75,7 @@ function Navbar() {
           {isLoggedIn ? (
             <div className="nav-user">
               <span className="nav-username">
-                {user?.name?.split(' ')[0]} ({user?.role === 'company' ? 'Company' : 'Customer'})
+                {user?.name?.split(' ')[0]} ({user?.role === 'admin' ? 'Admin' : user?.role === 'company' ? 'Company' : 'Customer'})
               </span>
               <button onClick={handleLogout} className="btn-logout">
                 <LogOut size={15} />
@@ -122,7 +122,7 @@ function App() {
       <footer className="site-footer">
         <div className="footer-inner">
           <div className="footer-brand">
-            <img src="/logo.jpeg" alt="SEIRA" style={{ height: '32px', borderRadius: '4px', marginBottom: '8px' }} />
+            <img src="/logo.jpeg" alt="SEIRA" style={{ height: '48px', borderRadius: '8px', marginBottom: '8px' }} />
             <span>SEIRA</span>
             <p>India's trusted manufacturing marketplace</p>
           </div>

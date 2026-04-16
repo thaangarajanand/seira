@@ -20,44 +20,6 @@ const AdminPanel = ({ stats, pendingProducts, allUsers, pendingCompanies, page, 
         ))}
       </div>
 
-      {/* Product Moderation Queue */}
-      <div className="card">
-        <h3 style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10 }}><ShieldAlert size={20} color="var(--amber-600)" /> Pending Product Moderation</h3>
-        {pendingProducts.length === 0 ? (
-          <div className="empty-state-v2">
-            <div className="empty-state-icon"><Package size={24} /></div>
-            <p>No products waiting for moderation.</p>
-          </div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 600 }}>
-              <thead>
-                <tr style={{ textAlign: 'left', borderBottom: '2px solid var(--slate-100)' }}>
-                  <th style={{ padding: 12, fontSize: '.75rem', color: 'var(--slate-500)', textTransform: 'uppercase' }}>Product</th>
-                  <th style={{ padding: 12, fontSize: '.75rem', color: 'var(--slate-500)', textTransform: 'uppercase' }}>Company</th>
-                  <th style={{ padding: 12, fontSize: '.75rem', color: 'var(--slate-500)', textTransform: 'uppercase' }}>Price</th>
-                  <th style={{ padding: 12, textAlign: 'right' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pendingProducts.map(p => (
-                  <tr key={p._id} style={{ borderBottom: '1px solid var(--slate-100)' }}>
-                    <td style={{ padding: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <img src={p.imageUrl?.startsWith('/uploads') ? `${API}${p.imageUrl}` : p.imageUrl} alt="" style={{ width: 40, height: 40, borderRadius: 6, objectFit: 'cover' }} />
-                      <p style={{ fontWeight: 600, fontSize: '.9rem' }}>{p.name}</p>
-                    </td>
-                    <td style={{ padding: 12, fontSize: '.9rem' }}>{p.companyId?.companyName || p.companyId?.name}</td>
-                    <td style={{ padding: 12, fontSize: '.9rem', fontWeight: 700 }}>₹{p.price.toLocaleString()}</td>
-                    <td style={{ padding: 12, textAlign: 'right' }}>
-                      <button className="btn-primary" style={{ padding: '6px 12px', fontSize: '.75rem' }} onClick={() => handleApproveProduct(p._id)}>Approve</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
 
       {/* User Governance & List */}
       <div className="card">

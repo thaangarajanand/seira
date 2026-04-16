@@ -24,8 +24,8 @@ const orderSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ['pending', 'negotiating', 'accepted', 'processing', 'quality_check', 'shipped', 'out_for_delivery', 'completed', 'cancelled', 'payment_failed'],
-    default: 'pending'
+    enum: ['pending', 'pending_approval', 'negotiating', 'accepted', 'processing', 'quality_check', 'shipped', 'out_for_delivery', 'completed', 'cancelled', 'payment_failed'],
+    default: 'pending_approval'
   },
   negotiationStartedAt: { type: Date },
   cancellationReason: { type: String },

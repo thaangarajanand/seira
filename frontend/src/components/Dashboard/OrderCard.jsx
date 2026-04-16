@@ -5,6 +5,7 @@ import TrackingMap from '../TrackingMap';
 const Badge = ({ status }) => {
   const styles = {
     pending: { bg: 'var(--amber-50)', text: 'var(--amber-700)', border: 'var(--amber-200)' },
+    pending_approval: { bg: 'var(--amber-50)', text: 'var(--amber-700)', border: 'var(--amber-200)' },
     negotiating: { bg: 'var(--sky-50)', text: 'var(--sky-700)', border: 'var(--sky-200)' },
     accepted: { bg: 'var(--teal-50)', text: 'var(--teal-700)', border: 'var(--teal-200)' },
     processing: { bg: 'var(--teal-500)', text: '#fff', border: 'transparent' },
@@ -85,12 +86,14 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
         </div>
       )}
 
-      {/* ── COMPANY ACTIONS ── */}
-      {isCompany && (order.status === 'pending' || order.status === 'negotiating') && (
+      {/* ── COMPANY ACTIONS: APPROVAL & NEGOTIATION ── */}
+      {isCompany && (order.status === 'pending_approval' || order.status === 'pending' || order.status === 'negotiating') && (
         <div className="negotiation-box warning" style={{ marginTop: 16 }}>
           <p className="neg-label">
-            {order.status === 'pending' ? '🔔 New Order — Customer proposed ₹' : '🔄 Counter offer made — Current rate ₹'}
-            <strong>{(order.proposedRate || 0).toLocaleString()}</strong>
+            {order.status === 'pending_approval' ? '🆕 Manual Approval Needed — Customer ordered ₹' : 
+             order.status === 'pending' ? '🔔 New Order — Customer proposed ₹' : 
+             '🔄 Counter offer made — Current rate ₹'}
+            <strong>{(order.proposedRate || order.finalRate || 0).toLocaleString()}</strong>
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 8 }}>
             <div>
@@ -103,9 +106,9 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
             </div>
           </div>
           <div className="neg-actions">
+            <button className="btn-accept" onClick={() => handleAccept(order._id)}>✅ Approve & Accept Rate</button>
             <button className="btn-propose" onClick={() => handleNegotiate(order._id)}>📤 Propose Counter</button>
-            <button className="btn-accept" onClick={() => handleAccept(order._id)}>✅ Accept Customer Rate</button>
-            <button className="btn-reject" onClick={() => handleReject(order._id)}>❌ Reject</button>
+            <button className="btn-reject" onClick={() => handleReject(order._id)}>❌ Reject Order</button>
           </div>
         </div>
       )}
