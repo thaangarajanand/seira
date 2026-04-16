@@ -29,7 +29,6 @@ export default function Dashboard() {
   const [orders, setOrders] = useState([]);
   const [myProducts, setMyProducts] = useState([]);
   const [stats, setStats] = useState({ users: 0, companies: 0, orders: 0, revenue: 0, gmvTrend: [] });
-  const [pendingProducts, setPendingProducts] = useState([]);
   const [pendingCompanies, setPendingCompanies] = useState({ companies: [], pages: 1, total: 0 });
   const [allUsers, setAllUsers] = useState({ users: [], pages: 1, total: 0 });
   const [myReviews] = useState([]);
@@ -98,11 +97,9 @@ export default function Dashboard() {
     if (user?.role !== 'admin' && view !== 'admin') return;
     try {
        const userRes = await fetch(`${API}/api/admin/users?page=${page}`, { headers: { 'Authorization': `Bearer ${token}` } });
-       const prodRes = await fetch(`${API}/api/admin/pending-products`, { headers: { 'Authorization': `Bearer ${token}` } });
        const compRes = await fetch(`${API}/api/admin/pending-companies`, { headers: { 'Authorization': `Bearer ${token}` } });
        
        if (userRes.ok) setAllUsers(await userRes.json());
-       if (prodRes.ok) setPendingProducts(await prodRes.json());
        if (compRes.ok) setPendingCompanies(await compRes.json());
     } catch (err) { console.error('Action failed:', err); }
   }, [token, page, user?.role, view]);
@@ -307,10 +304,6 @@ export default function Dashboard() {
     }
   };
 
-  const handleApproveProduct = async (id) => {
-     await fetch(`${API}/api/admin/approve-product/${id}`, { method: 'PUT', headers: { 'Authorization': `Bearer ${token}` } });
-     fetchAdminData();
-  };
 
   const handleSuspendUser = async (id, suspend) => {
      await fetch(`${API}/api/admin/suspend-user/${id}`, { 
@@ -435,7 +428,7 @@ export default function Dashboard() {
 
               {/* View Routing */}
               {view === 'profile' ? <ProfileSection user={user} myReviews={myReviews} API={API} setView={setView} /> :
-               view === 'admin' ? <AdminPanel stats={stats} pendingProducts={pendingProducts} allUsers={allUsers} pendingCompanies={pendingCompanies} page={page} setPage={setPage} handleApproveProduct={handleApproveProduct} handleSuspendUser={handleSuspendUser} handleViewUserDetails={handleViewUserDetails} approveCompany={approveCompany} API={API} /> :
+               view === 'admin' ? <AdminPanel stats={stats} allUsers={allUsers} pendingCompanies={pendingCompanies} page={page} setPage={setPage} handleSuspendUser={handleSuspendUser} handleViewUserDetails={handleViewUserDetails} approveCompany={approveCompany} /> :
                view === 'analytics' ? <AnalyticsView stats={stats} /> :
                isCompany && view === 'products' ? <InventoryManager myProducts={myProducts} openProductModal={openProductModal} deleteProduct={handleDeleteProduct} API={API} /> :
                (

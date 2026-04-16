@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserCircle, Shield, ShieldAlert, Truck, Package, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const AdminPanel = ({ stats, pendingProducts, allUsers, pendingCompanies, page, setPage, handleApproveProduct, handleSuspendUser, handleViewUserDetails, approveCompany, API }) => {
+const AdminPanel = ({ stats, allUsers, pendingCompanies, page, setPage, handleSuspendUser, handleViewUserDetails, approveCompany }) => {
   return (
     <div className="admin-panel-shell" style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column', gap: 24 }}>
       {/* Platform Stats Summary */}
