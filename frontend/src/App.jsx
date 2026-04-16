@@ -10,7 +10,9 @@ import Cart from './pages/Cart';
 import { useCart } from './context/CartContext';
 import { Terms, Privacy, Refund } from './pages/Legal';
 import ProductDetail from './pages/ProductDetail';
+import UserHome from './pages/UserHome';
 import { API_BASE_URL } from './api';
+
 // ── Protected Route ────────────────────────────────────────
 function ProtectedRoute({ children }) {
   const { isLoggedIn, loading } = useAuth();
@@ -19,11 +21,20 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function CustomerRoute({ children }) {
+  const { isLoggedIn, loading, user } = useAuth();
+  if (loading) return <div className="loading-screen"><div className="spinner" /></div>;
+  if (!isLoggedIn) return <Navigate to="/login" replace />;
+  if (user?.role !== 'customer') return <Navigate to="/dashboard" replace />;
+  return children;
+}
+
 // ── Navbar ─────────────────────────────────────────────────
 function Navbar() {
   const { isLoggedIn, logout, user } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
+  const homeLink = isLoggedIn && user?.role === 'customer' ? '/user-home' : '/';
 
   const handleLogout = () => {
     logout();
@@ -33,7 +44,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
-        <Link to="/" className="navbar-brand">
+        <Link to={homeLink} className="navbar-brand">
           <img src="/logo.jpeg" alt="SEIRA" className="brand-logo" style={{ height: '32px', borderRadius: '4px' }} />
           <span>SEIRA <span style={{ fontWeight: 400, opacity: 0.6, fontSize: '0.8em' }}>Industrial</span></span>
         </Link>
@@ -54,6 +65,12 @@ function Navbar() {
             <Home size={16} />
             Dashboard
           </Link>
+          {isLoggedIn && user?.role === 'customer' && (
+            <Link to="/user-home" className="nav-link">
+              <UserCircle size={16} />
+              Home
+            </Link>
+          )}
 
           {isLoggedIn ? (
             <div className="nav-user">
@@ -88,6 +105,9 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/user-home" element={
+            <CustomerRoute><UserHome /></CustomerRoute>
+          } />
 
           <Route path="/dashboard" element={
             <ProtectedRoute><Dashboard /></ProtectedRoute>
@@ -121,7 +141,11 @@ function App() {
 // ── Home View ───────────────────────────────────────────────
 function HomeView() {
   const [topCompany, setTopCompany] = useState(null);
-  const { isLoggedIn, isCompany } = useAuth();
+  const { isLoggedIn, isCompany, user } = useAuth();
+
+  if (isLoggedIn && user?.role === 'customer') {
+    return <UserHome />;
+  }
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/auth/top-company`)

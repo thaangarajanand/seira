@@ -7,7 +7,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, role, companyName } = req.body;
+    let { name, email, password, role, companyName } = req.body;
+    email = email.toLowerCase().trim();
 
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ error: 'User already exists' });
@@ -33,17 +34,18 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    email = email.toLowerCase().trim();
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ error: 'User not found' });
+    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
 
     if (user.role === 'company' && !user.isApproved) {
       return res.status(403).json({ error: 'Account pending admin approval' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!isMatch) return res.status(401).json({ error: 'Invalid email or password' });
 
     const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
 

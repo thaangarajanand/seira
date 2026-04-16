@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Truck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL as API } from '../api';
 
@@ -23,8 +22,8 @@ export default function Login() {
 
     const url = isLogin ? `${API}/api/auth/login` : `${API}/api/auth/register`;
     const payload = isLogin
-      ? { email: form.email, password: form.password }
-      : { name: form.name, email: form.email, password: form.password, role: form.role, companyName: form.role === 'company' ? form.companyName : undefined };
+      ? { email: form.email.trim(), password: form.password }
+      : { name: form.name, email: form.email.trim(), password: form.password, role: form.role, companyName: form.role === 'company' ? form.companyName : undefined };
 
     try {
       const res = await fetch(url, {
@@ -37,7 +36,7 @@ export default function Login() {
 
       if (isLogin) {
         login(data.user, data.token);
-        navigate('/dashboard');
+        navigate(data.user.role === 'customer' ? '/user-home' : '/dashboard');
       } else {
         setSuccess('Registration successful! Please sign in.');
         setIsLogin(true);
