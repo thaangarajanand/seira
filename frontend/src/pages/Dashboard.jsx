@@ -119,7 +119,7 @@ export default function Dashboard() {
       };
       loadAdminData();
     }
-  }, [view, fetchAdminData]);
+  }, [view, fetchAdminData, fetchStats]);
 
   // ── Socket Logic ──────────────────────────────────────
   useEffect(() => {
