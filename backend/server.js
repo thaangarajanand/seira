@@ -20,9 +20,11 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:3000',
+  'https://seira-psi.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean).map(normalizeOrigin);
 const allowedOriginPatterns = [
+  /^https:\/\/seira-[a-z0-9-]+\.vercel\.app$/,
   /^https:\/\/frontend-[a-z0-9-]+\.vercel\.app$/
 ];
 const corsOptions = {
