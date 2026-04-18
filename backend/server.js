@@ -141,10 +141,12 @@ app.use((req, res, next) => {
 // Centralized error handler
 app.use((err, req, res, next) => {
   console.error('🔥 Global Error:', err.stack);
-  // Temporarily exposing error details to diagnose Render 500 errors
+  const message = process.env.NODE_ENV === 'production' 
+    ? 'An unexpected error occurred. Please try again later.' 
+    : err.message;
   res.status(err.status || 500).json({
-    error: err.message,
-    stack: err.stack
+    error: message,
+    ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
   });
 });
 
