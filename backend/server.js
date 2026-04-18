@@ -113,7 +113,11 @@ const io = new Server(server, {
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/SEIRA')
-  .then(() => console.log('✅ MongoDB Connected to', process.env.MONGO_URI))
+  .then(async () => {
+    const dbName = mongoose.connection.name;
+    const userCount = await mongoose.model('User').countDocuments();
+    console.log(`✅ MongoDB Connected to ${dbName} (Total Users: ${userCount})`);
+  })
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Health check
