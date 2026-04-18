@@ -55,7 +55,7 @@ function MockPayModal({ amount, productName, onSuccess, onClose }) {
   );
 }
 
-function CustomizeModal({ product, onClose, token, user }) {
+function CustomizeModal({ product, onClose, user }) {
   const [files, setFiles] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ proposedRate: product.price || '', expectedDate: '', description: '', quantity: 1, dimensions: '' });
@@ -84,10 +84,10 @@ function CustomizeModal({ product, onClose, token, user }) {
     if (!form.description.trim() && !form.dimensions.trim()) return alert('Please enter some basic requirements first.');
     setSubmitting(true);
     try {
-      const res = await fetch({
+      const res = await fetch(`${API}/api/ai/refine`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/ai/refine`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: form.description, dimensions: form.dimensions })
       });
       if (res.ok) {
@@ -110,19 +110,18 @@ function CustomizeModal({ product, onClose, token, user }) {
     try {
       const formData = new FormData();
       files.forEach(f => formData.append('drawings', f));
-      const uploadRes = await fetch({
+      const uploadRes = await fetch(`${API}/api/upload`, {
         method: 'POST',
-        headers: {
-        credentials: 'include'}, `${ credentials: 'include', API}/api/upload`,
+        credentials: 'include',
         body: formData
       });
       if (!uploadRes.ok) throw new Error('File upload failed');
       const { urls } = await uploadRes.json();
 
-      const orderRes = await fetch({
+      const orderRes = await fetch(`${API}/api/orders`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'custom',
           product: product._id,
@@ -191,21 +190,22 @@ export default function ProductDetail() {
     try {
       const [prodRes, revRes] = await Promise.all([
         fetch(`${API}/api/products/${id}`),
-        fetch({
-          headers: {
-        credentials: 'include'}, `${ credentials: 'include', API}/api/reviews/product/${id}`)
+        fetch(`${API}/api/reviews/product/${id}`, {
+          credentials: 'include'
+        })
       ]);
       if (prodRes.ok) setProduct(await prodRes.json());
       if (revRes.ok) setReviews(await revRes.json());
 
-      if (token) {
-        const canRevRes = await fetch(`${API}/api/reviews/can-review-product/${id}`
+      if (isLoggedIn) {
+        const canRevRes = await fetch(`${API}/api/reviews/can-review-product/${id}`, {
+          credentials: 'include'
         });
         if (canRevRes.ok) setCanReview(await canRevRes.json());
       }
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
-  }, [id, token]);
+  }, [id, isLoggedIn]);
 
   useEffect(() => {
     fetch(`${API}/api/payment/config`).then(r => r.json()).then(setPayConfig).catch(() => {});
@@ -224,17 +224,17 @@ export default function ProductDetail() {
       return;
     }
     try {
-      const orderRes = await fetch({
+      const orderRes = await fetch(`${API}/api/orders`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'standard', product: product._id, proposedRate: product.price, quantity: 1 })
       });
       const order = await orderRes.json();
-      const payRes = await fetch({
+      const payRes = await fetch(`${API}/api/payment/create-order`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/create-order`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: product.price, orderId: order._id })
       });
       const payOrder = await payRes.json();
@@ -244,10 +244,10 @@ export default function ProductDetail() {
 
   const handlePaymentSuccess = async () => {
     try {
-      await fetch({
+      await fetch(`${API}/api/payment/verify`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/verify`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           razorpay_order_id: payModal.payOrderId, 
           razorpay_payment_id: 'mock_detail_' + Date.now(), 
@@ -267,10 +267,10 @@ export default function ProductDetail() {
     if (!reviewForm.rating) return alert('Please select a rating');
     setSubmittingReview(true);
     try {
-      const res = await fetch({
+      const res = await fetch(`${API}/api/reviews`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/reviews`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           companyId: canReview.companyId,
           orderId: canReview.orderId,
@@ -294,7 +294,7 @@ export default function ProductDetail() {
   return (
     <div className="page-container" style={{maxWidth: 1100}}>
       {payModal && <MockPayModal amount={product.price} productName={product.name} onSuccess={handlePaymentSuccess} onClose={() => setPayModal(null)} />}
-      {customizeModal && <CustomizeModal product={product} token={token} user={user} onClose={() => setCustomizeModal(null)} />}
+      {customizeModal && <CustomizeModal product={product} user={user} onClose={() => setCustomizeModal(null)} />}
 
       <Link to="/products" className="btn-secondary" style={{ padding: '8px 12px', marginBottom: 24, fontSize: '.85rem' }}>
         <ArrowLeft size={16} /> Back to Catalog

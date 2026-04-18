@@ -12,19 +12,11 @@ export default function UserHome() {
   const { user, isLoggedIn } = useAuth();
   const { cart } = useCart();
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [loading, setLoading] = useState(!!token);
+  const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   
-  // Adjust state during render to avoid cascading renders in useEffect
-  const [prevToken, setPrevToken] = useState(token);
-  if (token !== prevToken) {
-    setPrevToken(token);
-    setLoading(!!token);
-  }
-
   useEffect(() => {
-    // Fetch products for featured section
-    fetch(`${API}/api/products`)
+    const fetchProducts = fetch(`${API}/api/products`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -33,20 +25,20 @@ export default function UserHome() {
       })
       .catch(console.error);
 
-    // Fetch orders to show stats
-    if (token) {
-      fetch({
-        headers: {
-        credentials: 'include'}, `${ credentials: 'include', API}/api/orders`
+    let fetchOrdersTask = Promise.resolve();
+    if (isLoggedIn) {
+      fetchOrdersTask = fetch(`${API}/api/orders`, {
+        credentials: 'include'
       })
         .then(res => res.json())
         .then(data => {
           if (Array.isArray(data)) setOrders(data);
         })
-        .catch(console.error)
-        .finally(() => setLoading(false));
+        .catch(console.error);
     }
-  }, [token]);
+
+    Promise.all([fetchProducts, fetchOrdersTask]).finally(() => setLoading(false));
+  }, [isLoggedIn]);
 
   const activeOrders = orders.filter(o => !['completed', 'cancelled', 'rejected'].includes(o.status)).length;
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);

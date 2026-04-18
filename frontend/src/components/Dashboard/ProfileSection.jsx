@@ -3,7 +3,7 @@ import { UserCircle, Star, Shield, MapPin, Edit3, Phone, Save, X, Info } from 'l
 import { useAuth } from '../../context/AuthContext';
 
 const ProfileSection = ({ user, myReviews, API }) => {
-  const { token, updateUser } = useAuth();
+  const { updateUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user.name || '',
@@ -38,12 +38,12 @@ const ProfileSection = ({ user, myReviews, API }) => {
     e.preventDefault();
     setSaveLoading(true);
     try {
-      const res = await fetch({
+      const res = await fetch(`${API}/api/auth/profile`, {
         method: 'PUT',
-        credentials: 'include', 
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          }, `${ credentials: 'include', API}/api/auth/profile`,
+        },
         body: JSON.stringify(formData)
       });
       if (res.ok) {

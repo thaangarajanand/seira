@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload, Loader2, Package, IndianRupee, Layers } from 'lucide-react';
 
-const ProductModal = ({ isOpen, onClose, product, onSave, API, token }) => {
+const ProductModal = ({ isOpen, onClose, product, onSave, API }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -49,10 +49,9 @@ const ProductModal = ({ isOpen, onClose, product, onSave, API, token }) => {
     data.append('drawings', file); // API expects 'drawings' field name for uploads
 
     try {
-      const res = await fetch({
+      const res = await fetch(`${API}/api/upload`, {
         method: 'POST',
-        headers: {
-        credentials: 'include'}, `${ credentials: 'include', API}/api/upload`,
+        credentials: 'include',
         body: data
       });
       const result = await res.json();

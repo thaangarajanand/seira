@@ -32,7 +32,7 @@ function MockPayModal({ amount, productName, onSuccess, onClose }) {
   );
 }
 
-function CustomizeModal({ product, onClose, token }) {
+function CustomizeModal({ product, onClose }) {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -66,12 +66,12 @@ function CustomizeModal({ product, onClose, token }) {
     if (!form.description.trim() && !form.dimensions.trim()) return alert('Please enter some basic requirements first.');
     setSubmitting(true);
     try {
-      const res = await fetch({
+      const res = await fetch(`${API}/api/ai/refine`, {
         method: 'POST',
-        credentials: 'include', 
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          }, `${ credentials: 'include', API}/api/ai/refine`,
+        },
         body: JSON.stringify({ description: form.description, dimensions: form.dimensions })
       });
       if (res.ok) {
@@ -97,10 +97,9 @@ function CustomizeModal({ product, onClose, token }) {
       setUploading(true);
       const formData = new FormData();
       files.forEach(f => formData.append('drawings', f));
-      const uploadRes = await fetch({
+      const uploadRes = await fetch(`${API}/api/upload`, {
         method: 'POST',
-        headers: {
-        credentials: 'include'}, `${ credentials: 'include', API}/api/upload`,
+        credentials: 'include',
         body: formData
       });
       if (!uploadRes.ok) throw new Error((await uploadRes.json()).error || 'File upload failed');
@@ -281,10 +280,10 @@ export default function Products() {
 
   const verifyPayment = useCallback(async (payload) => {
     try {
-      const res = await fetch({
+      const res = await fetch(`${API}/api/payment/verify`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/verify`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
@@ -298,18 +297,18 @@ export default function Products() {
       console.error(err);
       alert('Network error during payment verification.');
     }
-  }, [token]);
+  }, []);
 
   const handlePaymentFailure = useCallback(async (orderId) => {
     try {
-      await fetch({
+      await fetch(`${API}/api/orders/${orderId}/status`, {
         method: 'PUT',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders/${orderId}/status`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'payment_failed' })
       });
     } catch (err) { console.error('Failed to update status to payment_failed:', err); }
-  }, [token]);
+  }, []);
 
   const openRazorpay = useCallback((product, orderId, payOrder, keyId) => {
     const options = {
@@ -347,19 +346,19 @@ export default function Products() {
       return;
     }
     try {
-      const orderRes = await fetch({
+      const orderRes = await fetch(`${API}/api/orders`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'standard', product: product._id, proposedRate: product.price, quantity: 1 })
       });
       if (!orderRes.ok) throw new Error('Failed to create order');
       const order = await orderRes.json();
 
-      const payRes = await fetch({
+      const payRes = await fetch(`${API}/api/payment/create-order`, {
         method: 'POST',
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/create-order`,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: product.price, orderId: order._id })
       });
       if (!payRes.ok) throw new Error('Payment initialization failed');
@@ -374,7 +373,7 @@ export default function Products() {
       console.error(err);
       alert(err.message || 'Payment initialization failed');
     }
-  }, [token, payConfig, openRazorpay]);
+  }, [isLoggedIn, payConfig, openRazorpay]);
 
   const handleMockSuccess = async () => {
     if (!payModal) return;
@@ -408,8 +407,6 @@ export default function Products() {
       )}
       {customizeModal && (
         <CustomizeModal
-          product={customizeModal}
-          token={token}
           onClose={() => setCustomizeModal(null)}
         />
       )}
