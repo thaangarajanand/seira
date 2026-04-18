@@ -508,7 +508,7 @@ export default function Products() {
       {filtered.length === 0 ? (
         <div className="empty-state">
           <ShoppingBag size={48} />
-          <p>No products found{search ? ` for "${search}"` : '. Run the seed script to add products.'}  </p>
+          <p>No products found{search ? ` for "${search}"` : '. Our catalog is being updated—please check back soon.'}</p>
         </div>
       ) : (
         <div className="product-grid">
