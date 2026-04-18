@@ -29,13 +29,14 @@ export default function Login() {
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        credentials: 'include'
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
 
       if (isLogin) {
-        login(data.user, data.token);
+        login(data.user);
         navigate(data.user.role === 'customer' ? '/user-home' : '/dashboard');
       } else {
         setSuccess('Registration successful! Please sign in.');

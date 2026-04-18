@@ -64,8 +64,9 @@ export default function Dashboard() {
   // ── Data Fetching ──────────────────────────────────────
   const fetchOrders = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/api/orders`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const res = await fetch({
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/orders`
       });
       if (res.ok) setOrders(await res.json());
     } catch (err) { console.error('Action failed:', err); }
@@ -74,8 +75,9 @@ export default function Dashboard() {
   const fetchProducts = useCallback(async () => {
     if (!isCompany) return;
     try {
-      const res = await fetch(`${API}/api/products/my-products`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const res = await fetch({
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/products/my-products`
       });
       if (res.ok) setMyProducts(await res.json());
     } catch (err) { console.error('Action failed:', err); }
@@ -83,8 +85,9 @@ export default function Dashboard() {
 
   const fetchStats = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/api/admin/stats`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const res = await fetch({
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/admin/stats`
       });
       if (res.ok) {
         const data = await res.json();
@@ -96,8 +99,10 @@ export default function Dashboard() {
   const fetchAdminData = useCallback(async () => {
     if (user?.role !== 'admin' && view !== 'admin') return;
     try {
-       const userRes = await fetch(`${API}/api/admin/users?page=${page}`, { headers: { 'Authorization': `Bearer ${token}` } });
-       const compRes = await fetch(`${API}/api/admin/pending-companies`, { headers: { 'Authorization': `Bearer ${token}` } });
+       const userRes = await fetch({ headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/admin/users?page=${page}` });
+       const compRes = await fetch({ headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/admin/pending-companies` });
        
        if (userRes.ok) setAllUsers(await userRes.json());
        if (compRes.ok) setPendingCompanies(await compRes.json());
@@ -142,8 +147,9 @@ export default function Dashboard() {
     setSelectedOrder(order);
     setShowChat(true);
     try {
-      const res = await fetch(`${API}/api/orders/${order._id}/messages`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const res = await fetch({
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/orders/${order._id}/messages`
       });
       if (res.ok) setMessages(await res.json());
     } catch (err) { console.error('Action failed:', err); }
@@ -191,9 +197,10 @@ export default function Dashboard() {
   const handleReject = async (orderId) => {
     if (!window.confirm('Reject this industrial order?')) return;
     try {
-      const res = await fetch(`${API}/api/orders/${orderId}/reject`, {
+      const res = await fetch({
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/orders/${orderId}/reject`
       });
       if (res.ok) fetchOrders();
     } catch (err) { console.error('Reject failed:', err); }
@@ -203,9 +210,10 @@ export default function Dashboard() {
     const reason = window.prompt('Reason for cancellation?');
     if (reason === null) return;
     try {
-      const res = await fetch(`${API}/api/orders/${orderId}/cancel`, {
+      const res = await fetch({
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders/${orderId}/cancel`,
         body: JSON.stringify({ reason })
       });
       if (res.ok) fetchOrders();
@@ -217,9 +225,10 @@ export default function Dashboard() {
   const handleStatusUpdate = async (orderId, status) => {
     const otp = otpInputs[orderId];
     try {
-      const res = await fetch(`${API}/api/orders/${orderId}/status`, {
+      const res = await fetch({
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders/${orderId}/status`,
         body: JSON.stringify({ status, otp })
       });
       if (res.ok) {
@@ -237,9 +246,10 @@ export default function Dashboard() {
     const rate = proposedRates[orderId];
     if (!rate) return alert('Enter rate');
     try {
-      await fetch(`${API}/api/orders/${orderId}/negotiate`, {
+      await fetch({
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders/${orderId}/negotiate`,
         body: JSON.stringify({ proposedRate: Number(rate), proposedDeliveryDate: proposedDates[orderId], counterNote: counterNotes[orderId] })
       });
       fetchOrders();
@@ -248,9 +258,10 @@ export default function Dashboard() {
 
   const handleAccept = async (orderId) => {
     try {
-      await fetch(`${API}/api/orders/${orderId}/accept`, {
+      await fetch({
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/orders/${orderId}/accept`
       });
       fetchOrders();
     } catch (err) { console.error('Action failed:', err); }
@@ -260,9 +271,10 @@ export default function Dashboard() {
 
   const handleMockPay = async () => {
     try {
-      await fetch(`${API}/api/payment/verify`, {
+      await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/verify`,
         body: JSON.stringify({ orderId: payModal.order._id, mock: true })
       });
       setPayModal(null);
@@ -273,9 +285,10 @@ export default function Dashboard() {
 
   const handleReviewSubmit = async (order, rating, comment) => {
      try {
-       await fetch(`${API}/api/reviews`, {
+       await fetch({
          method: 'POST',
-         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+         credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/reviews`,
          body: JSON.stringify({ orderId: order._id, rating, comment })
        });
        setShowReview(null);
@@ -285,9 +298,10 @@ export default function Dashboard() {
 
   const approveCompany = async (id) => {
     try {
-      const res = await fetch(`${API}/api/admin/approve-company/${id}`, {
+      const res = await fetch({
         method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/admin/approve-company/${id}`
       });
 
       if (res.ok) {
@@ -306,9 +320,10 @@ export default function Dashboard() {
 
 
   const handleSuspendUser = async (id, suspend) => {
-     await fetch(`${API}/api/admin/suspend-user/${id}`, { 
+     await fetch({ 
        method: 'PUT', 
-       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+       credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/admin/suspend-user/${id}`,
        body: JSON.stringify({ isSuspended: suspend })
      });
      fetchAdminData();
@@ -328,12 +343,12 @@ export default function Dashboard() {
       const url = productId ? `${API}/api/products/${productId}` : `${API}/api/products`;
       const method = productId ? 'PUT' : 'POST';
       
-      const res = await fetch(url, {
+      const res = await fetch({
         method,
-        headers: { 
+        credentials: 'include', 
+        headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
+          }, url,
         body: JSON.stringify(formData)
       });
 
@@ -353,9 +368,10 @@ export default function Dashboard() {
   const handleDeleteProduct = async (id) => {
     if (!window.confirm('Are you sure you want to delete this industrial part? This cannot be undone.')) return;
     try {
-      const res = await fetch(`${API}/api/products/${id}`, {
+      const res = await fetch({
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/products/${id}`
       });
       if (res.ok) {
         alert('Product removed from inventory');

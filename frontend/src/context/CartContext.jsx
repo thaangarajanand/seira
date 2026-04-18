@@ -5,7 +5,7 @@ import { API_BASE_URL as API } from '../api';
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const { token } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem('SEIRA-cart');
@@ -19,12 +19,13 @@ export function CartProvider({ children }) {
 
   // 2. Sync with Backend on Login
   useEffect(() => {
-    if (!token) return;
+    if (!isLoggedIn) return;
 
     const syncCart = async () => {
       try {
-        const res = await fetch(`${API}/api/cart`, {
-          headers: { 'Authorization': `Bearer ${token}` }
+        const res = await fetch({
+          headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/cart`
         });
         if (res.ok) {
           const backendCart = await res.json();
@@ -32,9 +33,10 @@ export function CartProvider({ children }) {
           // Merge logic: Local cart takes priority for now, or just replace if backend is empty
           if (cart.length > 0) {
              // Sync local to backend
-             await fetch(`${API}/api/cart/sync`, {
+             await fetch({
                method: 'POST',
-               headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+               credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/cart/sync`,
                body: JSON.stringify({ cart })
              });
           } else {
@@ -62,7 +64,7 @@ export function CartProvider({ children }) {
   }, [cart]);
 
   useEffect(() => {
-    if (!token) {
+    if (!isLoggedIn) {
       // Clear cart on logout. This is intentional state synchronization.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCart([]);
@@ -98,9 +100,10 @@ export function CartProvider({ children }) {
     // Backend sync
     if (token) {
       try {
-        await fetch(`${API}/api/cart/add`, {
+        await fetch({
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/cart/add`,
           body: JSON.stringify({ 
             product: product._id, 
             type, 
@@ -118,9 +121,10 @@ export function CartProvider({ children }) {
 
     if (token && targetItem?.cartItemId) {
       try {
-        await fetch(`${API}/api/cart/${targetItem.cartItemId}`, {
+        await fetch({
           method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/cart/${targetItem.cartItemId}`
         });
       } catch (err) { console.error(err); }
     }
@@ -144,9 +148,10 @@ export function CartProvider({ children }) {
     setCart([]);
     if (token) {
       try {
-        await fetch(`${API}/api/cart`, {
+        await fetch({
           method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/cart`
         });
       } catch (err) { console.error(err); }
     }

@@ -49,9 +49,10 @@ const ProductModal = ({ isOpen, onClose, product, onSave, API, token }) => {
     data.append('drawings', file); // API expects 'drawings' field name for uploads
 
     try {
-      const res = await fetch(`${API}/api/upload`, {
+      const res = await fetch({
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/upload`,
         body: data
       });
       const result = await res.json();

@@ -1,4 +1,10 @@
 const express = require('express');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const http = require('http');
 const path = require('path');
@@ -42,7 +48,41 @@ const corsOptions = {
 // CORS — allow frontend dev server
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
-app.use(express.json());
+// ── Security Middlewares ──────────────────────────────────
+app.use(helmet()); 
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com"],
+    styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+    imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+    connectSrc: ["'self'", "https://api.razorpay.com", "wss://*.socket.io", "ws://localhost:*"],
+    fontSrc: ["'self'", "https://fonts.gstatic.com"],
+    objectSrc: ["'none'"],
+    mediaSrc: ["'self'", "https://res.cloudinary.com"],
+    frameSrc: ["'self'", "https://api.razorpay.com"]
+  }
+}));
+
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
+});
+app.use('/api', globalLimiter);
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: 'Too many login attempts, please try again later' }
+});
+app.use('/api/auth', authLimiter);
+
+app.use(cookieParser());
+app.use(express.json({ limit: '10kb' }));
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp());
 
 // Serve uploaded drawings as static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -89,6 +129,24 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+
+// ── Error Handling ────────────────────────────────────────
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).json({ error: 'Endpoint not found' });
+});
+
+// Centralized error handler
+app.use((err, req, res, next) => {
+  console.error('🔥 Global Error:', err.stack);
+  const message = process.env.NODE_ENV === 'production' 
+    ? 'An unexpected error occurred. Please try again later.' 
+    : err.message;
+  res.status(err.status || 500).json({
+    error: message,
+    ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
+  });
+});
 
 // ── Socket.IO ─────────────────────────────────────────────
 io.on('connection', (socket) => {

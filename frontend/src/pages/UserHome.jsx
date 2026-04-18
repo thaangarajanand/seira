@@ -9,7 +9,7 @@ import { useCart } from '../context/CartContext';
 import { API_BASE_URL as API } from '../api';
 
 export default function UserHome() {
-  const { user, token } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const { cart } = useCart();
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(!!token);
@@ -35,8 +35,9 @@ export default function UserHome() {
 
     // Fetch orders to show stats
     if (token) {
-      fetch(`${API}/api/orders`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      fetch({
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/orders`
       })
         .then(res => res.json())
         .then(data => {

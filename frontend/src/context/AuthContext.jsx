@@ -1,37 +1,51 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL as API } from '../api';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const storedUser = localStorage.getItem('user');
-      return storedUser ? JSON.parse(storedUser) : null;
-    } catch {
-      localStorage.removeItem('user');
-      return null;
-    }
-  });
-  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
-  const loading = false;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (userData, tokenData) => {
-    localStorage.setItem('token', tokenData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    setToken(tokenData);
+  // Hydrate user on mount (Session Persistence)
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch(`${API}/api/auth/me`, {
+          credentials: 'include'
+        });
+        if (res.ok) {
+          const userData = await res.json();
+          setUser(userData);
+        }
+      } catch (err) {
+        console.error('Auth hydration failed:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const login = (userData) => {
     setUser(userData);
   };
 
-  const logout = () => {
-    localStorage.clear();
-    setToken(null);
-    setUser(null);
+  const logout = async () => {
+    try {
+      await fetch(`${API}/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      setUser(null);
+      localStorage.clear(); // Clear any non-sensitive UI preferences
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
   };
 
   const updateUser = (data) => {
-    const updatedUser = { ...user, ...data };
-    localStorage.setItem('user', JSON.stringify(updatedUser));
-    setUser(updatedUser);
+    setUser(prev => prev ? { ...prev, ...data } : null);
   };
 
   const updateLanguage = (lang) => {
@@ -41,12 +55,11 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       user,
-      token,
       login,
       logout,
       updateUser,
       updateLanguage,
-      isLoggedIn: !!token,
+      isLoggedIn: !!user,
       isCompany: user?.role === 'company',
       loading
     }}>

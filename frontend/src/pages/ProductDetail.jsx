@@ -84,9 +84,10 @@ function CustomizeModal({ product, onClose, token, user }) {
     if (!form.description.trim() && !form.dimensions.trim()) return alert('Please enter some basic requirements first.');
     setSubmitting(true);
     try {
-      const res = await fetch(`${API}/api/ai/refine`, {
+      const res = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/ai/refine`,
         body: JSON.stringify({ description: form.description, dimensions: form.dimensions })
       });
       if (res.ok) {
@@ -109,17 +110,19 @@ function CustomizeModal({ product, onClose, token, user }) {
     try {
       const formData = new FormData();
       files.forEach(f => formData.append('drawings', f));
-      const uploadRes = await fetch(`${API}/api/upload`, {
+      const uploadRes = await fetch({
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/upload`,
         body: formData
       });
       if (!uploadRes.ok) throw new Error('File upload failed');
       const { urls } = await uploadRes.json();
 
-      const orderRes = await fetch(`${API}/api/orders`, {
+      const orderRes = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
         body: JSON.stringify({
           type: 'custom',
           product: product._id,
@@ -169,7 +172,7 @@ function CustomizeModal({ product, onClose, token, user }) {
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const { token, user } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -188,14 +191,15 @@ export default function ProductDetail() {
     try {
       const [prodRes, revRes] = await Promise.all([
         fetch(`${API}/api/products/${id}`),
-        fetch(`${API}/api/reviews/product/${id}`)
+        fetch({
+          headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/reviews/product/${id}`)
       ]);
       if (prodRes.ok) setProduct(await prodRes.json());
       if (revRes.ok) setReviews(await revRes.json());
 
       if (token) {
-        const canRevRes = await fetch(`${API}/api/reviews/can-review-product/${id}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
+        const canRevRes = await fetch(`${API}/api/reviews/can-review-product/${id}`
         });
         if (canRevRes.ok) setCanReview(await canRevRes.json());
       }
@@ -209,7 +213,7 @@ export default function ProductDetail() {
   }, [fetchData]);
 
   const handleBuyNow = async () => {
-    if (!token) return navigate('/login');
+    if (!isLoggedIn) return navigate('/login');
     if (!window.Razorpay && !payConfig.mock) {
       alert('Razorpay SDK failed to load.');
       return;
@@ -220,15 +224,17 @@ export default function ProductDetail() {
       return;
     }
     try {
-      const orderRes = await fetch(`${API}/api/orders`, {
+      const orderRes = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
         body: JSON.stringify({ type: 'standard', product: product._id, proposedRate: product.price, quantity: 1 })
       });
       const order = await orderRes.json();
-      const payRes = await fetch(`${API}/api/payment/create-order`, {
+      const payRes = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/create-order`,
         body: JSON.stringify({ amount: product.price, orderId: order._id })
       });
       const payOrder = await payRes.json();
@@ -238,9 +244,10 @@ export default function ProductDetail() {
 
   const handlePaymentSuccess = async () => {
     try {
-      await fetch(`${API}/api/payment/verify`, {
+      await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/verify`,
         body: JSON.stringify({ 
           razorpay_order_id: payModal.payOrderId, 
           razorpay_payment_id: 'mock_detail_' + Date.now(), 
@@ -260,9 +267,10 @@ export default function ProductDetail() {
     if (!reviewForm.rating) return alert('Please select a rating');
     setSubmittingReview(true);
     try {
-      const res = await fetch(`${API}/api/reviews`, {
+      const res = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/reviews`,
         body: JSON.stringify({
           companyId: canReview.companyId,
           orderId: canReview.orderId,

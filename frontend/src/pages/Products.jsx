@@ -66,12 +66,12 @@ function CustomizeModal({ product, onClose, token }) {
     if (!form.description.trim() && !form.dimensions.trim()) return alert('Please enter some basic requirements first.');
     setSubmitting(true);
     try {
-      const res = await fetch(`${API}/api/ai/refine`, {
+      const res = await fetch({
         method: 'POST',
-        headers: { 
+        credentials: 'include', 
+        headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
+          }, `${ credentials: 'include', API}/api/ai/refine`,
         body: JSON.stringify({ description: form.description, dimensions: form.dimensions })
       });
       if (res.ok) {
@@ -97,9 +97,10 @@ function CustomizeModal({ product, onClose, token }) {
       setUploading(true);
       const formData = new FormData();
       files.forEach(f => formData.append('drawings', f));
-      const uploadRes = await fetch(`${API}/api/upload`, {
+      const uploadRes = await fetch({
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: {
+        credentials: 'include'}, `${ credentials: 'include', API}/api/upload`,
         body: formData
       });
       if (!uploadRes.ok) throw new Error((await uploadRes.json()).error || 'File upload failed');
@@ -227,7 +228,7 @@ export default function Products() {
     showFilters: false
   });
 
-  const { token } = useAuth();
+  const { isLoggedIn } = useAuth();
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -280,9 +281,10 @@ export default function Products() {
 
   const verifyPayment = useCallback(async (payload) => {
     try {
-      const res = await fetch(`${API}/api/payment/verify`, {
+      const res = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/verify`,
         body: JSON.stringify(payload)
       });
       const data = await res.json();
@@ -300,9 +302,10 @@ export default function Products() {
 
   const handlePaymentFailure = useCallback(async (orderId) => {
     try {
-      await fetch(`${API}/api/orders/${orderId}/status`, {
+      await fetch({
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders/${orderId}/status`,
         body: JSON.stringify({ status: 'payment_failed' })
       });
     } catch (err) { console.error('Failed to update status to payment_failed:', err); }
@@ -338,23 +341,25 @@ export default function Products() {
   }, [verifyPayment, handlePaymentFailure]);
 
   const handleBuy = useCallback(async (product) => {
-    if (!token) {
+    if (!isLoggedIn) {
       alert('Please login to make a purchase.');
       window.location.href = '/login';
       return;
     }
     try {
-      const orderRes = await fetch(`${API}/api/orders`, {
+      const orderRes = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
         body: JSON.stringify({ type: 'standard', product: product._id, proposedRate: product.price, quantity: 1 })
       });
       if (!orderRes.ok) throw new Error('Failed to create order');
       const order = await orderRes.json();
 
-      const payRes = await fetch(`${API}/api/payment/create-order`, {
+      const payRes = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/create-order`,
         body: JSON.stringify({ amount: product.price, orderId: order._id })
       });
       if (!payRes.ok) throw new Error('Payment initialization failed');
@@ -582,7 +587,7 @@ export default function Products() {
                       className="btn-buy"
                       style={{ background: 'var(--slate-100)', color: 'var(--slate-700)', flex: 1, minWidth: '100px' }}
                       onClick={() => {
-                        if (!token) { alert('Please login to request customisation.'); window.location.href = '/login'; return; }
+                        if (!isLoggedIn) { alert('Please login to request customisation.'); window.location.href = '/login'; return; }
                         setCustomizeModal(product);
                       }}
                     >

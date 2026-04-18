@@ -38,12 +38,12 @@ const ProfileSection = ({ user, myReviews, API }) => {
     e.preventDefault();
     setSaveLoading(true);
     try {
-      const res = await fetch(`${API}/api/auth/profile`, {
+      const res = await fetch({
         method: 'PUT',
+        credentials: 'include', 
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+          }, `${ credentials: 'include', API}/api/auth/profile`,
         body: JSON.stringify(formData)
       });
       if (res.ok) {

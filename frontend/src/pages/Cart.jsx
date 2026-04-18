@@ -7,7 +7,7 @@ import { API_BASE_URL as API } from '../api';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, totalAmount, clearCart } = useCart();
-  const { token, user } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState({ mock: true });
@@ -17,7 +17,7 @@ export default function Cart() {
   }, []);
 
   const handleCheckout = async () => {
-    if (!token) {
+    if (!isLoggedIn) {
       alert('Please login to checkout.');
       navigate('/login');
       return;
@@ -49,9 +49,10 @@ export default function Cart() {
           payload.proposedDeliveryDate = item.customData?.proposedDeliveryDate;
         }
 
-        const res = await fetch(`${API}/api/orders`, {
+        const res = await fetch({
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/orders`,
           body: JSON.stringify(payload)
         });
         if (!res.ok) throw new Error('Failed to create order');
@@ -62,22 +63,24 @@ export default function Cart() {
       // Total amount checkout - Razorpay integration
       const total = Array.isArray(cart) ? cart.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 0)), 0) : 0;
       
-      const payRes = await fetch(`${API}/api/payment/create-order`, {
+      const payRes = await fetch({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/create-order`,
         body: JSON.stringify({ amount: total })
       });
       if (!payRes.ok) throw new Error('Payment init failed');
       const payOrder = await payRes.json();
       
-      const pConfigRes = await fetch(`${API}/api/payment/config`);
+      const pConfigRes = await fetch({
+          method: 'POST',
+          credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/config`);
       const pConfig = await pConfigRes.json();
 
       if (payOrder.mock || pConfig.mock) {
         // Just verify automatically for mock
-        const verifyRes = await fetch(`${API}/api/payment/verify`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        const verifyRes = await fetch(`${API}/api/payment/verify`,
           body: JSON.stringify({ 
             mock: true, 
              orderIds: orderIds.map(o => o.orderId),
@@ -98,9 +101,10 @@ export default function Cart() {
           description: `Checkout ${cart.length} items`,
           order_id: payOrder.id,
           handler: async (response) => {
-            const verifyRes = await fetch(`${API}/api/payment/verify`, {
+            const verifyRes = await fetch({
               method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+              credentials: 'include', 
+        headers: { 'Content-Type': 'application/json'}, `${ credentials: 'include', API}/api/payment/verify`,
               body: JSON.stringify({ 
                 ...response, 
                 orderIds: orderIds.map(o => o.orderId) 
