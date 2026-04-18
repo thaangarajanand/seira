@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['customer', 'company', 'admin'], default: 'customer' },
-  isApproved: { type: Boolean, default: true }, // Companies need manual approval by admin
+  isApproved: { type: Boolean, default: false }, // Companies need manual approval by admin
   
   // Profile fields
   phone: { type: String },

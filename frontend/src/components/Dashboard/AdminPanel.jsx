@@ -36,7 +36,14 @@ const AdminPanel = ({ stats, allUsers, pendingCompanies, page, setPage, handleSu
                     {u.name} {u.role === 'admin' && <Shield size={14} color="var(--teal-600)" />}
                     {u.isSuspended && <span style={{ fontSize: '.6rem', background: 'var(--red-500)', color: '#fff', padding: '1px 6px', borderRadius: 4 }}>SUSPENDED</span>}
                   </p>
-                  <p style={{ fontSize: '.8rem', color: 'var(--slate-500)', margin: 0 }}>{u.email} • {u.role.toUpperCase()}</p>
+                  <p style={{ fontSize: '.8rem', color: 'var(--slate-500)', margin: 0 }}>
+                    {u.email} • {u.role.toUpperCase()}
+                    {u.role === 'company' && (
+                      <span style={{ marginLeft: 8, fontSize: '.65rem', padding: '2px 8px', borderRadius: 10, background: u.isApproved ? 'var(--teal-50)' : 'var(--amber-50)', color: u.isApproved ? 'var(--teal-700)' : 'var(--amber-700)', fontWeight: 600, border: u.isApproved ? '1px solid var(--teal-200)' : '1px solid var(--amber-200)' }}>
+                        {u.isApproved ? '✓ VERIFIED' : '⏲ PENDING'}
+                      </span>
+                    )}
+                  </p>
                 </div>
               </div>
               <div className="admin-user-actions" style={{ display: 'flex', gap: 8 }}>
@@ -68,16 +75,27 @@ const AdminPanel = ({ stats, allUsers, pendingCompanies, page, setPage, handleSu
 
       {/* Corporate Approvals */}
       <div className="card">
-        <h3 style={{ marginBottom: 16 }}>Corporate Profile Verification</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <h3 style={{ margin: 0 }}>Corporate Profile Verification</h3>
+          {pendingCompanies.companies?.length > 0 && (
+            <span style={{ background: 'var(--amber-100)', color: 'var(--amber-800)', padding: '4px 10px', borderRadius: 20, fontSize: '.75rem', fontWeight: 800 }}>
+              {pendingCompanies.companies.length} Pending Approval
+            </span>
+          )}
+        </div>
+        
         {pendingCompanies.companies?.length === 0 ? (
-          <p style={{ textAlign: 'center', color: 'var(--slate-400)', padding: 40 }}>All corporate profiles are verified.</p>
+          <div style={{ textAlign: 'center', color: 'var(--slate-400)', padding: '60px 20px', background: 'var(--slate-50)', borderRadius: 12, border: '1px dashed var(--slate-300)' }}>
+            <Shield size={32} style={{ marginBottom: 12, opacity: 0.3 }} />
+            <p style={{ margin: 0 }}>All corporate profiles are verified.</p>
+          </div>
         ) : (
           <div className="admin-company-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {pendingCompanies.companies?.map(c => (
               <div key={c._id} className="admin-company-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, background: 'var(--slate-50)', borderRadius: 12, border: '1px solid var(--slate-200)' }}>
                 <div>
-                  <p style={{ fontWeight: 800, color: 'var(--slate-900)' }}>{c.companyName || c.name}</p>
-                  <p style={{ fontSize: '.8rem', color: 'var(--slate-500)' }}>{c.email}</p>
+                  <p style={{ fontWeight: 800, color: 'var(--slate-900)', margin: 0 }}>{c.companyName || c.name}</p>
+                  <p style={{ fontSize: '.8rem', color: 'var(--slate-500)', margin: 0 }}>{c.email}</p>
                 </div>
                 <div className="admin-company-actions" style={{ display: 'flex', gap: 8 }}>
                   <button className="btn-primary" style={{ padding: '6px 16px', fontSize: '.8rem' }} onClick={() => approveCompany(c._id)}>Verify Now</button>

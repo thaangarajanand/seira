@@ -115,7 +115,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (view === 'admin') {
       const loadAdminData = async () => {
-        await fetchAdminData();
+        await Promise.all([fetchAdminData(), fetchStats()]);
       };
       loadAdminData();
     }
