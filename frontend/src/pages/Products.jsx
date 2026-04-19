@@ -232,13 +232,13 @@ export default function Products() {
 
   useEffect(() => {
     // Fetch payment config to know if we're in mock mode
-    fetch(`${API}/api/payment/config`)
+    fetch(`${API}/api/payment/config`, { credentials: 'include' })
       .then(r => r.json())
       .then(setPayConfig)
       .catch(() => {});
 
     // Fetch products
-    fetch(`${API}/api/products`)
+    fetch(`${API}/api/products`, { credentials: 'include' })
       .then(r => r.json())
       .then(data => {
         const productList = Array.isArray(data) ? data : [];

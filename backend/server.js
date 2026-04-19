@@ -15,7 +15,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const normalizeOrigin = (origin) => origin?.replace(/\/$/, '');
+const normalizeOrigin = (origin) => origin?.trim().replace(/\/$/, '');
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',

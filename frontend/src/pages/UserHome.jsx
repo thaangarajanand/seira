@@ -16,7 +16,7 @@ export default function UserHome() {
   const [orders, setOrders] = useState([]);
   
   useEffect(() => {
-    const fetchProducts = fetch(`${API}/api/products`)
+    const fetchProducts = fetch(`${API}/api/products`, { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

@@ -189,7 +189,7 @@ export default function ProductDetail() {
     setLoading(true);
     try {
       const [prodRes, revRes] = await Promise.all([
-        fetch(`${API}/api/products/${id}`),
+        fetch(`${API}/api/products/${id}`, { credentials: 'include' }),
         fetch(`${API}/api/reviews/product/${id}`, {
           credentials: 'include'
         })
@@ -208,7 +208,7 @@ export default function ProductDetail() {
   }, [id, isLoggedIn]);
 
   useEffect(() => {
-    fetch(`${API}/api/payment/config`).then(r => r.json()).then(setPayConfig).catch(() => {});
+    fetch(`${API}/api/payment/config`, { credentials: 'include' }).then(r => r.json()).then(setPayConfig).catch(() => {});
     fetchData();
   }, [fetchData]);
 

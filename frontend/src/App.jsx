@@ -144,7 +144,7 @@ function HomeView() {
   const { isLoggedIn, isCompany, user } = useAuth();
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/auth/top-company`)
+    fetch(`${API_BASE_URL}/api/auth/top-company`, { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
         if (data && data._id) setTopCompany(data);

@@ -13,7 +13,7 @@ export default function Cart() {
   const [payConfig, setPayConfig] = useState({ mock: true });
 
   useEffect(() => {
-    fetch(`${API}/api/payment/config`).then(r => r.json()).then(setPayConfig).catch(() => {});
+    fetch(`${API}/api/payment/config`, { credentials: 'include' }).then(r => r.json()).then(setPayConfig).catch(() => {});
   }, []);
 
   const handleCheckout = async () => {

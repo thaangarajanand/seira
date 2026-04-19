@@ -1,5 +1,6 @@
 import React from 'react';
 import { Package, Settings, BarChart2, UserCircle, Shield, ShoppingBag } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const DashboardSidebar = ({ view, setView, isCompany, user, isSidebarOpen, setIsSidebarOpen }) => {
   return (
@@ -52,9 +53,9 @@ const DashboardSidebar = ({ view, setView, isCompany, user, isSidebarOpen, setIs
           )}
 
           <div style={{ marginTop: 'auto', borderTop: '1px solid var(--slate-100)', paddingTop: 16 }}>
-             <a href="/products" className="nav-link" style={{ color: 'var(--teal-600)' }}>
+             <Link to="/products" className="nav-link" style={{ color: 'var(--teal-600)' }}>
                 <ShoppingBag size={18} /> Visit Marketplace
-             </a>
+             </Link>
           </div>
         </div>
       </aside>
