@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const DashboardSidebar = ({ view, setView, isCompany, user, isSidebarOpen, setIsSidebarOpen }) => {
   return (
     <>
-      <aside className={`dashboard-sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ width: 260, borderRight: '1px solid var(--slate-200)', flexShrink: 0 }}>
+      <aside className={`dashboard-sidebar ${isSidebarOpen ? 'open' : ''}`} style={{ borderRight: '1px solid var(--slate-200)', flexShrink: 0 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '24px 0', position: 'sticky', top: 88 }}>
           <button 
             className={`nav-link ${view === 'orders' ? 'active' : ''}`} 

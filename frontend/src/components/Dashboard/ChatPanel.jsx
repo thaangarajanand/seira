@@ -3,7 +3,7 @@ import { X, Mic, MicOff, Send, Globe } from 'lucide-react';
 
 const ChatPanel = ({ selectedOrder, messages, user, newMessage, setNewMessage, sendMessage, toggleRecording, isRecording, chatLang, handleLanguageChange, messagesEndRef, setShowChat }) => {
   return (
-    <div className="chat-panel" style={{ height: 600 }}>
+    <div className="chat-panel">
       <div className="chat-header">
         <div>
           <p className="chat-title">💬 #{selectedOrder._id.slice(-6).toUpperCase()}</p>

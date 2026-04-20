@@ -21,6 +21,7 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:3000',
   'https://seira-psi.vercel.app',
+  'https://saieliteindia.store',
   process.env.FRONTEND_URL
 ].filter(Boolean).map(normalizeOrigin);
 const allowedOriginPatterns = [

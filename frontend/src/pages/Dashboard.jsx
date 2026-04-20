@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { 
-  Zap, Filter, ShieldAlert, MapPin, Package, ShoppingBag
+  Zap, Filter, ShieldAlert, MapPin, Package, ShoppingBag, Menu
 } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { useAuth } from '../context/AuthContext';
@@ -402,15 +402,24 @@ export default function Dashboard() {
 
         <main style={{ flex: 1, minWidth: 0, padding: '24px 0' }}>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-            <div>
-              <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0 }}>
-                {view === 'orders' ? '📦 My Manufacturing Orders' : 
-                 view === 'products' ? '🔧 Inventory Control' : 
-                 view === 'analytics' ? '📈 Business Performance' : 
-                 view === 'profile' ? '👤 Account Settings' : '🛡️ Platform Governance'}
-              </h1>
-              <p style={{ color: 'var(--slate-500)', margin: 0 }}>Welcome back, <span className="text-teal font-bold">{user.name}</span></p>
+          <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <button 
+                className="mobile-toggle" 
+                onClick={() => setIsSidebarOpen(true)}
+                style={{ background: 'var(--slate-100)', borderRadius: '8px', padding: '8px' }}
+              >
+                <Menu size={20} />
+              </button>
+              <div>
+                <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0 }}>
+                  {view === 'orders' ? '📦 My Manufacturing Orders' : 
+                   view === 'products' ? '🔧 Inventory Control' : 
+                   view === 'analytics' ? '📈 Business Performance' : 
+                   view === 'profile' ? '👤 Account Settings' : '🛡️ Platform Governance'}
+                </h1>
+                <p style={{ color: 'var(--slate-500)', margin: 0 }}>Welcome back, <span className="text-teal font-bold">{user.name}</span></p>
+              </div>
             </div>
             {isCompany && view === 'products' && (
               <button className="btn-primary" onClick={() => openProductModal('add')}>+ Add New Product</button>

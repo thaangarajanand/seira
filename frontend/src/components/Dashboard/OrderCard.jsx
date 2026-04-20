@@ -53,18 +53,18 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 24, fontSize: '.85rem', color: 'var(--slate-600)', background: 'var(--slate-50)', padding: '14px 20px', borderRadius: 12, border: '1px solid var(--slate-100)', flexWrap: 'wrap', alignItems: 'center' }}>
+      <div className="order-stats-row" style={{ display: 'flex', gap: 24, fontSize: '.85rem', color: 'var(--slate-600)', background: 'var(--slate-50)', padding: '14px 20px', borderRadius: 12, border: '1px solid var(--slate-100)', flexWrap: 'wrap', alignItems: 'center' }}>
          <div>
            <p style={{ fontSize: '.65rem', textTransform: 'uppercase', fontWeight: 700, opacity: 0.6, margin: 0 }}>Proposed/Final Rate</p>
            <p style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--slate-900)', margin: 0 }}>₹{(order.finalRate || order.proposedRate || 0).toLocaleString()}</p>
          </div>
-         <div style={{ height: 30, width: 1, background: 'var(--slate-200)' }} />
+         <div className="stat-divider-v" style={{ height: 30, width: 1, background: 'var(--slate-200)' }} />
          <div>
            <p style={{ fontSize: '.65rem', textTransform: 'uppercase', fontWeight: 700, opacity: 0.6, margin: 0 }}>Timeline</p>
            <p style={{ fontSize: '.9rem', fontWeight: 600, color: 'var(--slate-700)', margin: 0 }}>{order.finalDeliveryDate ? new Date(order.finalDeliveryDate).toLocaleDateString() : (order.proposedDeliveryDate ? new Date(order.proposedDeliveryDate).toLocaleDateString() : 'Under Negotiation')}</p>
          </div>
          
-         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
+         <div className="order-actions" style={{ marginLeft: 'auto', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button className="btn-chat" onClick={() => openChat(order)} style={{ background: '#fff' }}><MessageSquare size={16}/> Chat</button>
             {order.status === 'accepted' && !isCompany && (
               <button className="btn-pay" onClick={() => setPayModal({ amount: order.finalRate || order.proposedRate, productName: order.product?.name || 'Order Payment', orderId: order._id })}>Pay Now</button>
@@ -95,7 +95,7 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
              '🔄 Counter offer made — Current rate ₹'}
             <strong>{(order.proposedRate || order.finalRate || 0).toLocaleString()}</strong>
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 8 }}>
+          <div className="neg-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 8 }}>
             <div>
               <label className="form-label" style={{ fontSize: '.75rem' }}>Counter Rate (₹)</label>
               <input className="rate-input" style={{ width: '100%' }} type="number" value={proposedRates[order._id] || ''} onChange={e => setProposedRates(r => ({ ...r, [order._id]: e.target.value }))} />

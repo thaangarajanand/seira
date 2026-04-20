@@ -34,48 +34,51 @@ function Navbar() {
   const { isLoggedIn, logout, user } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const homeLink = isLoggedIn && user?.role === 'customer' ? '/user-home' : '/';
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   const handleLogout = () => {
     logout();
+    closeMenu();
     navigate('/');
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-inner">
-        <Link to={homeLink} className="navbar-brand">
+        <button className="mobile-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        <Link to={homeLink} className="navbar-brand" onClick={closeMenu}>
           <img src="/logo.jpeg" alt="SEIRA" className="brand-logo" style={{ height: '48px', borderRadius: '8px' }} />
           <span>SEIRA</span>
         </Link>
 
+        {/* Global Desktop Navigation */}
         <div className="navbar-links">
           <Link to="/products" className="nav-link">
             <ShoppingBag size={16} />
-            Shop
+            <span>Shop</span>
           </Link>
-          <Link to="/cart" className="nav-link cart-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ position: 'relative' }}>
+          <Link to="/cart" className="nav-link cart-btn">
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
               <ShoppingCart size={16} />
               {cart.length > 0 && <span className="cart-badge">{cart.reduce((a,c)=>a+c.quantity, 0)}</span>}
             </div>
-            Cart
+            <span>Cart</span>
           </Link>
           <Link to="/dashboard" className="nav-link">
             <Home size={16} />
-            Dashboard
+            <span>Dashboard</span>
           </Link>
-          {isLoggedIn && user?.role === 'customer' && (
-            <Link to="/user-home" className="nav-link">
-              <UserCircle size={16} />
-              Home
-            </Link>
-          )}
 
           {isLoggedIn ? (
             <div className="nav-user">
               <span className="nav-username">
-                {user?.name?.split(' ')[0]} ({user?.role === 'admin' ? 'Admin' : user?.role === 'company' ? 'Company' : 'Customer'})
+                {user?.name?.split(' ')[0]}
               </span>
               <button onClick={handleLogout} className="btn-logout">
                 <LogOut size={15} />
@@ -88,6 +91,26 @@ function Navbar() {
               Login
             </Link>
           )}
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
+           <Link to="/products" onClick={closeMenu} className="nav-link"><ShoppingBag size={20} /> Marketplace Catalog</Link>
+           <Link to="/cart" onClick={closeMenu} className="nav-link"><ShoppingCart size={20} /> My Sourcing Cart ({cart.length})</Link>
+           <Link to="/dashboard" onClick={closeMenu} className="nav-link"><Home size={20} /> Management Dashboard</Link>
+           {isLoggedIn && user?.role === 'customer' && (
+             <Link to="/user-home" onClick={closeMenu} className="nav-link"><UserCircle size={20} /> Customer Home</Link>
+           )}
+           <hr style={{ border: 'none', borderTop: '1px solid var(--slate-100)', margin: '8px 0' }} />
+           {isLoggedIn ? (
+             <button onClick={handleLogout} className="btn-logout" style={{ padding: '14px', justifyContent: 'flex-start' }}>
+               <LogOut size={20} /> End Session
+             </button>
+           ) : (
+             <Link to="/login" onClick={closeMenu} className="btn-login" style={{ margin: 0, justifyContent: 'center' }}>
+               <UserCircle size={20} /> Sign In
+             </Link>
+           )}
         </div>
       </div>
     </nav>
@@ -271,7 +294,7 @@ function HomeView() {
             </h2>
             <p>Connect with our highest-rated manufacturing partners.</p>
           </div>
-          <div style={{ maxWidth: 600, margin: '0 auto', background: '#fff', borderRadius: '16px', padding: '24px', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+          <div style={{ maxWidth: 600, margin: '0 auto', background: '#fff', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', textAlign: 'center' }}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: 8 }}>{topCompany.companyName}</h3>
             <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 16 }}>
               <span style={{ background: 'var(--amber-100)', color: 'var(--amber-700)', padding: '4px 12px', borderRadius: 20, fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 4 }}>

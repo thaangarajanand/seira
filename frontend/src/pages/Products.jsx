@@ -411,12 +411,12 @@ export default function Products() {
         />
       )}
 
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 12 }}>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16, marginBottom: 20 }}>
         <div>
-          <h1 className="page-title">Standard Parts Catalog</h1>
+          <h1 className="page-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)' }}>Standard Parts Catalog</h1>
           <p className="page-subtitle">Immediate purchase from top verified vendors • {filtered.length} products</p>
         </div>
-        <div style={{ position: 'relative' }}>
+        <div className="search-container" style={{ position: 'relative', width: '100%', maxWidth: '320px' }}>
           <Search size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--slate-400)' }} />
           <input
             type="text"
@@ -424,13 +424,13 @@ export default function Products() {
             placeholder="Search products..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            style={{ paddingLeft: 36, width: 260 }}
+            style={{ paddingLeft: 36, width: '100%' }}
           />
         </div>
       </div>
 
-      <div className="category-filter-container" style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', flex: 1 }}>
+      <div className="category-filter-container" style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 24 }}>
+        <div className="category-chips-wrapper" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', flex: 1, minWidth: 280 }}>
           {categories.map(cat => (
             <button
               key={cat}
@@ -442,9 +442,9 @@ export default function Products() {
           ))}
         </div>
         <button 
-          className="btn-secondary" 
+          className="btn-secondary filter-toggle-btn" 
           onClick={() => setFilters(f => ({ ...f, showFilters: !f.showFilters }))}
-          style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 8, fontSize: '.85rem' }}
+          style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 8, fontSize: '.85rem', flexShrink: 0 }}
         >
           <Filter size={14} /> {filters.showFilters ? 'Hide Filters' : 'More Filters'}
         </button>

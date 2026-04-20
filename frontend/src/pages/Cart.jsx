@@ -134,18 +134,18 @@ export default function Cart() {
   };
 
   return (
-    <div className="cart-page" style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 30 }}>
+    <div className="cart-page">
+      <div className="cart-header">
         <Link to="/products" className="btn-secondary" style={{ padding: '8px', display: 'flex' }}>
           <ArrowLeft size={18} />
         </Link>
-        <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', display: 'flex', alignItems: 'center', gap: 12 }}>
           <ShoppingBag size={28} color="var(--teal-600)" />
           Your Cart
         </h1>
       </div>
       
-      <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid var(--slate-100)', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', padding: '24px' }}>
+      <div className="cart-container">
         {cart.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--slate-400)' }}>
             <ShoppingBag size={48} style={{ margin: '0 auto 16px', opacity: 0.2 }} />
@@ -155,21 +155,27 @@ export default function Cart() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {cart.map(item => (
-              <div key={item._id} style={{ display: 'flex', gap: 20, alignItems: 'center', paddingBottom: 20, borderBottom: '1px solid var(--slate-100)' }}>
+              <div key={item._id} className="cart-item">
                 <Link to={`/products/${item._id}`}>
-                  <img src={item.imageUrl?.startsWith('/uploads') ? `${API}${item.imageUrl}` : item.imageUrl} alt={item.name} style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 8, background: 'var(--slate-50)' }} />
+                  <img src={item.imageUrl?.startsWith('/uploads') ? `${API}${item.imageUrl}` : item.imageUrl} alt={item.name} className="cart-item-img" />
                 </Link>
                 
-                <div style={{ flex: 1 }}>
+                <div className="cart-item-info">
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <h4 style={{ fontSize: '1.2rem', margin: 0 }}>{item.name}</h4>
-                    <span style={{ fontSize: '.7rem', padding: '2px 8px', borderRadius: 4, background: item.type === 'custom' ? 'var(--amber-100)' : 'var(--slate-100)', color: item.type === 'custom' ? 'var(--amber-700)' : 'var(--slate-600)', fontWeight: 700, textTransform: 'uppercase' }}>
+                    <h4 style={{ fontSize: '1.1rem', margin: 0 }}>{item.name}</h4>
+                    <span style={{ fontSize: '.6rem', padding: '2px 6px', borderRadius: 4, background: item.type === 'custom' ? 'var(--amber-100)' : 'var(--slate-100)', color: item.type === 'custom' ? 'var(--amber-700)' : 'var(--slate-600)', fontWeight: 700, textTransform: 'uppercase' }}>
                       {item.type || 'standard'}
                     </span>
                   </div>
-                  <p style={{ color: 'var(--slate-500)', fontSize: '.9rem', marginBottom: 8 }}>
-                    ₹{(item.type === 'custom' ? (item.customData?.proposedRate ?? 0) : (item.price ?? 0)).toLocaleString('en-IN')}
-                  </p>
+                  <div className="cart-item-price-row">
+                    <p style={{ color: 'var(--slate-500)', fontSize: '.9rem', marginBottom: 8 }}>
+                      ₹{(item.type === 'custom' ? (item.customData?.proposedRate ?? 0) : (item.price ?? 0)).toLocaleString('en-IN')}
+                    </p>
+
+                    <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--slate-800)' }}>
+                      ₹{((item.type === 'custom' ? item.customData?.proposedRate : (item.price || 0)) * (item.quantity || 1)).toLocaleString('en-IN')}
+                    </div>
+                  </div>
 
                   {item.type === 'custom' && (
                     <div style={{ marginBottom: 12, padding: 8, background: 'var(--amber-50)', borderRadius: 8, border: '1px solid var(--amber-100)', fontSize: '.8rem' }}>
@@ -181,7 +187,7 @@ export default function Cart() {
                     </div>
                   )}
                   
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 12, flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--slate-200)', borderRadius: 6, overflow: 'hidden' }}>
                       <button onClick={() => updateQuantity(item._id, item.type, item.quantity - 1)} style={{ padding: '6px 10px', background: 'var(--slate-50)', border: 'none', cursor: 'pointer' }}><Minus size={14}/></button>
                       <span style={{ padding: '0 12px', minWidth: 30, textAlign: 'center', fontSize: '.9rem', fontWeight: 600 }}>{item.quantity}</span>
@@ -193,13 +199,10 @@ export default function Cart() {
                     </button>
                   </div>
                 </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--slate-800)' }}>
-                  ₹{((item.type === 'custom' ? item.customData?.proposedRate : (item.price || 0)) * (item.quantity || 1)).toLocaleString('en-IN')}
-                </div>
               </div>
             ))}
 
-            <div style={{ marginTop: 20, padding: 24, background: 'var(--slate-50)', borderRadius: 12 }}>
+            <div className="cart-total-section">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
                 <span style={{ fontSize: '1.2rem', color: 'var(--slate-600)' }}>Total Checkout Amount</span>
                 <span style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--teal-700)' }}>₹{totalAmount.toLocaleString('en-IN')}</span>
