@@ -1,28 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const { refineRequirements } = require('../services/groqService');
-const authMiddleware = require('../middleware/authMiddleware');
-const User = require('../models/User');
+const { refineRequirements, chatWithAI } = require('../services/groqService');
 
-// POST /api/ai/refine - Refine customization requirements
-router.post('/refine', authMiddleware, async (req, res) => {
-  const { description, dimensions } = req.body;
-  try {
-    const refined = await refineRequirements(description, dimensions);
-    res.json({ refined });
-  } catch (error) {
-    res.status(500).json({ error: 'AI refinement failed' });
+// ... (existing /refine and /language routes)
+
+// POST /api/ai/chat - General AI Assistant chat
+router.post('/chat', authMiddleware, async (req, res) => {
+  const { messages } = req.body;
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: 'Messages array is required' });
   }
-});
 
-// PUT /api/ai/language - Update user preferred language
-router.put('/language', authMiddleware, async (req, res) => {
-  const { language } = req.body;
   try {
-    await User.findByIdAndUpdate(req.user.id, { preferredLanguage: language });
-    res.json({ message: 'Language preference updated' });
+    const response = await chatWithAI(messages);
+    res.json({ response });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update language' });
+    console.error('AI chat route error:', error);
+    res.status(500).json({ error: 'AI Assistant failed' });
   }
 });
 

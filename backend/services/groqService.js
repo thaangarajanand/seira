@@ -83,7 +83,33 @@ async function refineRequirements(initialNotes, dimensions) {
   }
 }
 
+/**
+ * General AI Assistant chat function for industrial/manufacturing queries.
+ */
+async function chatWithAI(messages) {
+  try {
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: `You are the SEIRA AI Assistant, an expert in industrial manufacturing, supply chain, and B2B sourcing in India. 
+          Your goal is to provide technical advice on materials (SS304, Aluminum, etc.), manufacturing processes (CNC, Injection Molding, etc.), and industrial trends.
+          Keep your tone professional, precise, and helpful. Use bullet points for technical specs.`
+        },
+        ...messages
+      ],
+      model: 'llama-3.3-70b-versatile',
+    });
+
+    return chatCompletion.choices[0]?.message?.content?.trim() || "I'm sorry, I couldn't process that request.";
+  } catch (error) {
+    console.error('Groq Chat Error:', error);
+    throw error;
+  }
+}
+
 module.exports = {
   translateMessage,
   refineRequirements,
+  chatWithAI,
 };

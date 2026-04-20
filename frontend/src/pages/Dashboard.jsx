@@ -15,6 +15,7 @@ import OrderCard from '../components/Dashboard/OrderCard';
 import ChatPanel from '../components/Dashboard/ChatPanel';
 import { MockPayModal, ReviewModal, UserDetailsModal } from '../components/Dashboard/DashboardModals';
 import ProductModal from '../components/Dashboard/ProductModal';
+import AIChatPanel from '../components/Dashboard/AIChatPanel';
 import { API_BASE_URL as API } from '../api';
 
 export default function Dashboard() {
@@ -47,6 +48,7 @@ export default function Dashboard() {
   const [showReview, setShowReview] = useState(null);
   const [productModal, setProductModal] = useState({ isOpen: false, product: null });
   const [selectedUserDetails, setSelectedUserDetails] = useState(null);
+  const [showAIPanel, setShowAIPanel] = useState(false);
 
   
   // Refs
@@ -503,11 +505,13 @@ export default function Dashboard() {
         <button 
           className="btn-primary" 
           style={{ width: 60, height: 60, borderRadius: '50%', boxShadow: '0 8px 32px rgba(13, 148, 136, 0.4)', padding: 0 }}
-          onClick={() => alert("🤖 SEIRA AI Assistant: Analyzing industrial sourcing trends...")}
+          onClick={() => setShowAIPanel(!showAIPanel)}
         >
           <Zap size={28} />
         </button>
       </div>
+
+      {showAIPanel && <AIChatPanel onClose={() => setShowAIPanel(false)} API={API} />}
     </div>
   );
 }
