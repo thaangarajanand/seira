@@ -1285,31 +1285,59 @@ select.form-input { appearance: none; background-image: url("data:image/svg+xml,
 
   /* Mobile menu appearance */
   .mobile-nav {
-    position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
-    background: #fff; z-index: 2000 !important;
-    padding: 24px; flex-direction: column; gap: 12px;
-    display: none !important; /* Default hidden on mobile */
+    position: fixed; 
+    top: 68px; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    height: calc(100vh - 68px); 
+    background: #ffffff !important; 
+    z-index: 2100 !important;
+    padding: 24px; 
+    display: none !important; /* Managed by App.jsx and .open class */
+    flex-direction: column !important; 
+    gap: 8px;
     border-top: 1px solid var(--slate-100);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    overflow-y: auto;
   }
+  
   .mobile-nav.open { 
-    display: flex !important; /* Show when open */
-    animation: slideDown 0.3s ease-out;
+    display: flex !important; 
+    animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-overlay {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 2000 !important;
+    animation: fadeIn 0.3s ease;
   }
   
   .mobile-nav .nav-link {
     width: 100%;
     padding: 16px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     border-bottom: 1px solid var(--slate-50);
     justify-content: flex-start;
+    border-radius: 12px;
   }
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideInRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Dashboard Sidebar Mobile Overlay */

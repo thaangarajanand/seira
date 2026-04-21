@@ -96,25 +96,29 @@ function Navbar() {
           )}
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
-           <Link to="/products" onClick={closeMenu} className="nav-link"><ShoppingBag size={20} /> Marketplace Catalog</Link>
-           <Link to="/cart" onClick={closeMenu} className="nav-link"><ShoppingCart size={20} /> My Sourcing Cart ({cart.length})</Link>
-           <Link to="/dashboard" onClick={closeMenu} className="nav-link"><Home size={20} /> Management Dashboard</Link>
-           {isLoggedIn && user?.role === 'customer' && (
-             <Link to="/user-home" onClick={closeMenu} className="nav-link"><UserCircle size={20} /> Customer Home</Link>
-           )}
-           <hr style={{ border: 'none', borderTop: '1px solid var(--slate-100)', margin: '8px 0' }} />
-           {isLoggedIn ? (
-             <button onClick={handleLogout} className="btn-logout" style={{ padding: '14px', justifyContent: 'flex-start' }}>
-               <LogOut size={20} /> End Session
-             </button>
-           ) : (
-             <Link to="/login" onClick={closeMenu} className="btn-login" style={{ margin: 0, justifyContent: 'center' }}>
-               <UserCircle size={20} /> Sign In
-             </Link>
-           )}
-        </div>
+      </div>
+
+      {/* Mobile Navigation Drawer Overlay */}
+      {isMenuOpen && <div className="mobile-overlay" onClick={closeMenu} />}
+
+      {/* Mobile Navigation Drawer */}
+      <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
+         <Link to="/products" onClick={closeMenu} className="nav-link"><ShoppingBag size={20} /> Marketplace Catalog</Link>
+         <Link to="/cart" onClick={closeMenu} className="nav-link"><ShoppingCart size={20} /> My Sourcing Cart ({cart.length})</Link>
+         <Link to="/dashboard" onClick={closeMenu} className="nav-link"><Home size={20} /> Management Dashboard</Link>
+         {isLoggedIn && user?.role === 'customer' && (
+           <Link to="/user-home" onClick={closeMenu} className="nav-link"><UserCircle size={20} /> Customer Home</Link>
+         )}
+         <hr style={{ border: 'none', borderTop: '1px solid var(--slate-100)', margin: '8px 0' }} />
+         {isLoggedIn ? (
+           <button onClick={handleLogout} className="btn-logout" style={{ padding: '14px', justifyContent: 'flex-start', width: '100%' }}>
+             <LogOut size={20} /> End Session
+           </button>
+         ) : (
+           <Link to="/login" onClick={closeMenu} className="nav-link btn-primary" style={{ margin: '10px 0', justifyContent: 'center', color: '#fff' }}>
+             <UserCircle size={20} /> Login / Register
+           </Link>
+         )}
       </div>
     </nav>
   );
