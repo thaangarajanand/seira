@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { API_BASE_URL as API } from '../api';
 
+console.log('[API DIAGNOSTIC] Current Base URL:', API);
+
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -11,18 +13,26 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch(`${API}/api/auth/me`, {
+        const url = `${API}/api/auth/me`;
+        console.log('[API DIAGNOSTIC] Hydrating from:', url);
+        const res = await fetch(url, {
           credentials: 'include'
         });
-        if (res.ok) {
+        
+        const contentType = res.headers.get('content-type');
+        if (res.ok && contentType && contentType.includes('application/json')) {
           const userData = await res.json();
           setUser(userData);
         } else {
           const text = await res.text();
-          console.warn('Auth check failed with status:', res.status, 'Body snippet:', text.substring(0, 100));
+          console.warn('[API DIAGNOSTIC] Auth check failed.', {
+            status: res.status,
+            contentType,
+            bodySnippet: text.substring(0, 100)
+          });
         }
       } catch (err) {
-        console.error('Auth hydration failed:', err);
+        console.error('[API DIAGNOSTIC] Auth hydration error:', err);
       } finally {
         setLoading(false);
       }
