@@ -1,4 +1,4 @@
-import { Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Home, ShoppingBag, ShoppingCart, Truck, UserCircle, LogOut, ChevronRight, Zap, Shield, Star, Clock, Award, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
@@ -34,6 +34,7 @@ function Navbar() {
   const { isLoggedIn, logout, user } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const homeLink = isLoggedIn && user?.role === 'customer' ? '/user-home' : '/';
 
@@ -86,10 +87,12 @@ function Navbar() {
               </button>
             </div>
           ) : (
-            <Link to="/login" className="btn-login">
-              <UserCircle size={16} />
-              Login
-            </Link>
+            location.pathname !== '/login' && (
+              <Link to="/login" className="btn-login">
+                <UserCircle size={16} />
+                Login
+              </Link>
+            )
           )}
         </div>
 

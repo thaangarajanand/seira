@@ -428,7 +428,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: (view === 'orders' && showChat) ? '1fr 380px' : '1fr', gap: 24, alignItems: 'start' }}>
+          <div className="dashboard-grid">
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {/* Governance Alerts */}

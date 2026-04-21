@@ -17,6 +17,9 @@ export function AuthProvider({ children }) {
         if (res.ok) {
           const userData = await res.json();
           setUser(userData);
+        } else {
+          const text = await res.text();
+          console.warn('Auth check failed with status:', res.status, 'Body snippet:', text.substring(0, 100));
         }
       } catch (err) {
         console.error('Auth hydration failed:', err);
