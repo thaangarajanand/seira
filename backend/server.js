@@ -126,6 +126,10 @@ app.get('/', (req, res) => {
   res.json({ status: 'SEIRA API is running', version: '2.0.0' });
 });
 
+app.get('/api/ping', (req, res) => {
+  res.json({ pong: true, timestamp: new Date().toISOString() });
+});
+
 // ── Routes ────────────────────────────────────────────────
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
