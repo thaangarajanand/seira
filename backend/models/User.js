@@ -40,7 +40,13 @@ const userSchema = new mongoose.Schema({
   portfolioImages: [{ type: String }],
   completedOrdersCount: { type: Number, default: 0 },
   averageRating: { type: Number, default: 0 },
-  preferredLanguage: { type: String, default: 'en' }
+  preferredLanguage: { type: String, default: 'en' },
+
+  // Security Hardening
+  loginAttempts: { type: Number, default: 0 },
+  lockUntil: { type: Date },
+  lastLoginIP: { type: String },
+  lastLoginDevice: { type: String }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

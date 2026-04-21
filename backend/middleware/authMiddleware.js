@@ -20,6 +20,24 @@ const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ error: 'User no longer exists' });
     }
 
+    // ── SLIDING SESSION FOR ADMINS ─────────────────────
+    if (user.role === 'admin') {
+      const now = Math.floor(Date.now() / 1000);
+      const remainingSec = decoded.exp - now;
+      
+      // If less than 10 minutes left, renew
+      if (remainingSec < 10 * 60) {
+        const newToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: '30m' });
+        const isProduction = process.env.NODE_ENV === 'production';
+        res.cookie('token', newToken, {
+          httpOnly: true,
+          secure: isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https',
+          sameSite: (isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https') ? 'none' : 'lax',
+          maxAge: 30 * 60 * 1000
+        });
+      }
+    }
+
     req.user = user;
     next();
   } catch (err) {

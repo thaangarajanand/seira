@@ -10,6 +10,10 @@ export default function Login() {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
+  const [requireCaptcha, setRequireCaptcha] = useState(false);
+  const [captchaQuestion, setCaptchaQuestion] = useState('');
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [captchaExpected, setCaptchaExpected] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,7 +27,7 @@ export default function Login() {
 
     const url = isLogin ? `${API}/api/auth/login` : `${API}/api/auth/register`;
     const payload = isLogin
-      ? { email: form.email.trim(), password: form.password }
+      ? { email: form.email.trim(), password: form.password, captchaAnswer, captchaExpected }
       : { name: form.name, email: form.email.trim(), password: form.password, role: form.role, companyName: form.role === 'company' ? form.companyName : undefined };
 
     try {
@@ -39,12 +43,52 @@ export default function Login() {
       if (isLogin) {
         login(data.user);
         setFailedAttempts(0);
+        setRequireCaptcha(false);
         navigate(data.user.role === 'customer' ? '/user-home' : '/dashboard');
       } else {
         setSuccess('Registration successful! Please sign in.');
         setIsLogin(true);
         setForm(f => ({ ...f, password: '' }));
       }
+    } catch (err) {
+      setError(err.message);
+      // Check if CAPTCHA is required from response
+      // Note: We need to parse the response even if not OK to get custom fields
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Modified fetch to handle CAPTCHA from error responses
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email.trim(), password: form.password, captchaAnswer, captchaExpected }),
+        credentials: 'include'
+      });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        if (data.requireCaptcha) {
+          setRequireCaptcha(true);
+          setCaptchaQuestion(data.captchaQuestion);
+          setCaptchaExpected(data.captchaExpected);
+          setCaptchaAnswer('');
+        }
+        throw new Error(data.error || 'Login failed');
+      }
+
+      login(data.user);
+      setFailedAttempts(0);
+      setRequireCaptcha(false);
+      navigate(data.user.role === 'customer' ? '/user-home' : '/dashboard');
     } catch (err) {
       setError(err.message);
       if (isLogin) setFailedAttempts(prev => prev + 1);
@@ -106,7 +150,23 @@ export default function Login() {
             <input className="form-input" type="password" required value={form.password} onChange={update('password')} placeholder="••••••••" />
           </div>
 
-          <button type="submit" className="btn-submit" disabled={loading}>
+          {isLogin && requireCaptcha && (
+            <div style={{ padding: '16px', background: 'var(--slate-50)', borderRadius: '12px', border: '1px solid var(--slate-200)', marginTop: 12 }}>
+              <label className="form-label" style={{ color: 'var(--teal-700)', fontWeight: 800 }}>Security Verification</label>
+              <p style={{ fontSize: '.85rem', color: 'var(--slate-600)', marginBottom: 12 }}>{captchaQuestion}</p>
+              <input 
+                className="form-input" 
+                type="number" 
+                required 
+                value={captchaAnswer} 
+                onChange={(e) => setCaptchaAnswer(e.target.value)} 
+                placeholder="Enter answer" 
+                style={{ background: '#fff' }}
+              />
+            </div>
+          )}
+
+          <button type="submit" className="btn-submit" disabled={loading} onClick={isLogin ? handleLoginSubmit : handleSubmit}>
             {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>

@@ -40,6 +40,33 @@ export function AuthProvider({ children }) {
     checkAuth();
   }, []);
 
+  // ── IDLE TIMER FOR ADMINS ──────────────────────────────
+  useEffect(() => {
+    if (!user || user.role !== 'admin') return;
+
+    let idleTimer;
+    const IDLE_TIMEOUT = 15 * 60 * 1000; // 15 minutes
+
+    const resetTimer = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        console.warn('Admin session expired due to inactivity');
+        logout();
+      }, IDLE_TIMEOUT);
+    };
+
+    // Events to monitor for activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    
+    events.forEach(name => document.addEventListener(name, resetTimer));
+    resetTimer(); // Initialize
+
+    return () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      events.forEach(name => document.removeEventListener(name, resetTimer));
+    };
+  }, [user]);
+
   const login = (userData) => {
     setUser(userData);
   };

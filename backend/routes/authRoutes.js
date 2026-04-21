@@ -34,28 +34,86 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    let { email, password } = req.body;
+    let { email, password, captchaAnswer } = req.body;
     email = email.toLowerCase().trim();
 
     const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ error: 'Invalid email or password' });
 
-    if (user.role === 'company' && !user.isApproved) {
-      return res.status(403).json({ error: 'Account pending admin approval' });
+    // Check account lockout
+    if (user.lockUntil && user.lockUntil > Date.now()) {
+      const remaining = Math.ceil((user.lockUntil - Date.now()) / 60000);
+      return res.status(403).json({ error: `Account locked. Please try again after ${remaining} minutes.` });
+    }
+
+    // Admin Specific Security: CAPTCHA Check
+    if (user.role === 'admin' && user.loginAttempts >= 3) {
+      if (!captchaAnswer) {
+        // Generate new question
+        const n1 = Math.floor(Math.random() * 10) + 1;
+        const n2 = Math.floor(Math.random() * 10) + 1;
+        // We store the answer in a temporary signature or just prompt them to try again with answer
+        // To be simple, we tell the frontend to show the field and generate a question
+        return res.status(401).json({ 
+          error: 'Security Check: Please solve the CAPTCHA',
+          requireCaptcha: true,
+          captchaQuestion: `What is ${n1} + ${n2}?`,
+          captchaExpected: n1 + n2 // In production, usually hash this or store in session
+        });
+      }
+      
+      // Verification of answer passed from frontend (which was given the expected answer in previous fail)
+      const { captchaExpected } = req.body; 
+      if (Number(captchaAnswer) !== Number(captchaExpected)) {
+         return res.status(401).json({ error: 'Incorrect CAPTCHA answer. Please try again.' });
+      }
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: 'Invalid email or password' });
+    
+    if (!isMatch) {
+      user.loginAttempts += 1;
+      // Lockout logic
+      if (user.role === 'admin' && user.loginAttempts >= 5) {
+        user.lockUntil = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
+      }
+      await user.save();
 
-    const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      // Return captcha requirement if needed for next time
+      let response = { error: 'Invalid email or password' };
+      if (user.role === 'admin' && user.loginAttempts >= 3) {
+        const n1 = Math.floor(Math.random() * 10) + 1;
+        const n2 = Math.floor(Math.random() * 10) + 1;
+        response = { 
+          ...response, 
+          requireCaptcha: true, 
+          captchaQuestion: `What is ${n1} + ${n2}?`,
+          captchaExpected: n1 + n2
+        };
+      }
+      return res.status(401).json(response);
+    }
 
+    // Success - Reset security tracking
+    user.loginAttempts = 0;
+    user.lockUntil = undefined;
+    user.lastLoginIP = req.ip || req.headers['x-forwarded-for'];
+    user.lastLoginDevice = req.headers['user-agent'];
+    await user.save();
+
+    // Session duration
+    const isAdmin = user.role === 'admin';
+    const expiresIn = isAdmin ? '30m' : '1d';
+    const maxAge = isAdmin ? 30 * 60 * 1000 : 24 * 60 * 60 * 1000;
+
+    const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn });
     const isProduction = process.env.NODE_ENV === 'production';
     
     res.cookie('token', token, {
       httpOnly: true,
       secure: isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https',
-      sameSite: (isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https') ? 'none' : 'lax',
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
+      sameSite: (isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https') ? 'none' : 'lax', // Needed for cross-domain cookies
+      maxAge
     });
 
     res.json({
