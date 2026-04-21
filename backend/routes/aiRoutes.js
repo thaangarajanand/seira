@@ -1,6 +1,19 @@
+const express = require('express');
+const router = express.Router();
+const authMiddleware = require('../middleware/authMiddleware');
 const { refineRequirements, chatWithAI } = require('../services/groqService');
 
-// ... (existing /refine and /language routes)
+// POST /api/ai/refine - Refine industrial requirements
+router.post('/refine', authMiddleware, async (req, res) => {
+  const { notes, dimensions } = req.body;
+  try {
+    const refined = await refineRequirements(notes, dimensions);
+    res.json({ refined });
+  } catch (error) {
+    console.error('AI refinement error:', error);
+    res.status(500).json({ error: 'Requirement refinement failed' });
+  }
+});
 
 // POST /api/ai/chat - General AI Assistant chat
 router.post('/chat', authMiddleware, async (req, res) => {

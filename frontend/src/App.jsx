@@ -1,5 +1,5 @@
 import { Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
-import { Home, ShoppingBag, ShoppingCart, Truck, UserCircle, LogOut, ChevronRight, Zap, Shield, Star, Clock, Award } from 'lucide-react';
+import { Home, ShoppingBag, ShoppingCart, Truck, UserCircle, LogOut, ChevronRight, Zap, Shield, Star, Clock, Award, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 
