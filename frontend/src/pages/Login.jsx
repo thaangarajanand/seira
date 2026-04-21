@@ -9,6 +9,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -37,6 +38,7 @@ export default function Login() {
 
       if (isLogin) {
         login(data.user);
+        setFailedAttempts(0);
         navigate(data.user.role === 'customer' ? '/user-home' : '/dashboard');
       } else {
         setSuccess('Registration successful! Please sign in.');
@@ -45,6 +47,7 @@ export default function Login() {
       }
     } catch (err) {
       setError(err.message);
+      if (isLogin) setFailedAttempts(prev => prev + 1);
     } finally {
       setLoading(false);
     }
@@ -65,6 +68,11 @@ export default function Login() {
 
         {error && <div className="error-box" style={{ marginBottom: 16 }}>{error}</div>}
         {success && <div className="success-box" style={{ marginBottom: 16 }}>{success}</div>}
+        {isLogin && failedAttempts >= 3 && !error.includes('Too many') && (
+          <div style={{ padding: '12px', background: 'var(--amber-50)', border: '1px solid var(--amber-200)', borderRadius: '8px', color: 'var(--amber-700)', fontSize: '.85rem', marginBottom: 16, display: 'flex', gap: 10, alignItems: 'center' }}>
+            <span>⚠️ <strong>Warning:</strong> {failedAttempts} incorrect attempts. Too many failed logins will lock your account for 8 minutes and 23 seconds.</span>
+          </div>
+        )}
 
         <form className="login-form" onSubmit={handleSubmit}>
           {!isLogin && (
@@ -104,7 +112,7 @@ export default function Login() {
         </form>
 
         <div className="login-toggle">
-          <button onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); }}>
+          <button onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); setFailedAttempts(0); }}>
             {isLogin ? "Don't have an account? Register" : 'Already have an account? Sign in'}
           </button>
         </div>

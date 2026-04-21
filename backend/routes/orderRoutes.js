@@ -113,7 +113,17 @@ router.post('/', authMiddleware, async (req, res) => {
       quantity: Number(quantity) || 1,
       status: 'pending_approval',
       finalRate: type === 'standard' ? Number(proposedRate) : null,
-      finalDeliveryDate: type === 'standard' ? proposedDeliveryDate : null
+      finalDeliveryDate: type === 'standard' ? proposedDeliveryDate : null,
+      deliveryAddress: req.body.deliveryAddress || {
+        name: req.user.name,
+        phone: req.user.phone,
+        street: req.user.street,
+        city: req.user.city,
+        state: req.user.state,
+        pincode: req.user.pincode,
+        lat: req.user.location?.lat,
+        lng: req.user.location?.lng
+      }
     });
 
     await newOrder.save();

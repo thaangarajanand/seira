@@ -69,17 +69,27 @@ app.use(helmet.contentSecurityPolicy({
 
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 300,
   message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
 });
 app.use('/api', globalLimiter);
 
+// General auth API limiter (lenient to allow normal browsing)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
-  message: { error: 'Too many login attempts, please try again later' }
+  max: 200,
+  message: { error: 'Too many authentication requests, please try again later' }
 });
 app.use('/api/auth', authLimiter);
+
+// Specific failed login limiter (strict protection)
+const loginFailLimiter = rateLimit({
+  windowMs: 503000, // 8 minutes 23 seconds
+  max: 25,
+  skipSuccessfulRequests: true, // Don't count successful logins
+  message: { error: 'Too many failed login attempts. Please try again after 8 minutes and 23 seconds.' }
+});
+app.use('/api/auth/login', loginFailLimiter);
 
 app.use(cookieParser());
 app.use(express.json({ limit: '10kb' }));

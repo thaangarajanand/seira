@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { API_BASE_URL as API } from '../api';
+import CheckoutAddressModal from '../components/CheckoutAddressModal';
 
 // ── Components (Sub-components) ───────────────────────────
 
@@ -183,6 +184,8 @@ export default function ProductDetail() {
   const [submittingReview, setSubmittingReview] = useState(false);
   const [payModal, setPayModal] = useState(null);
   const [customizeModal, setCustomizeModal] = useState(null);
+  const [addressModal, setAddressModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [payConfig, setPayConfig] = useState({ mock: true, keyId: null });
 
   const fetchData = useCallback(async () => {
@@ -218,17 +221,35 @@ export default function ProductDetail() {
       alert('Razorpay SDK failed to load.');
       return;
     }
-    if (!user?.address || !user?.location) {
-      alert('📍 Please update your delivery address and location in your profile before buying.');
-      navigate('/dashboard');
+
+    if (!selectedAddress && (!user?.street || !user?.location)) {
+      setAddressModal(true);
       return;
     }
+    
     try {
+      const addr = selectedAddress || {
+        name: user.name,
+        phone: user.phone,
+        street: user.street,
+        city: user.city,
+        state: user.state,
+        pincode: user.pincode,
+        lat: user.location?.lat,
+        lng: user.location?.lng
+      };
+
       const orderRes = await fetch(`${API}/api/orders`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'standard', product: product._id, proposedRate: product.price, quantity: 1 })
+        body: JSON.stringify({ 
+          type: 'standard', 
+          product: product._id, 
+          proposedRate: product.price, 
+          quantity: 1,
+          deliveryAddress: addr
+        })
       });
       const order = await orderRes.json();
       const payRes = await fetch(`${API}/api/payment/create-order`, {
@@ -295,6 +316,32 @@ export default function ProductDetail() {
     <div className="page-container" style={{maxWidth: 1100}}>
       {payModal && <MockPayModal amount={product.price} productName={product.name} onSuccess={handlePaymentSuccess} onClose={() => setPayModal(null)} />}
       {customizeModal && <CustomizeModal product={product} user={user} onClose={() => setCustomizeModal(null)} />}
+      
+      {addressModal && (
+        <CheckoutAddressModal 
+          user={user} 
+          initialAddress={selectedAddress} 
+          onClose={() => setAddressModal(false)} 
+          onSave={async (addr, saveToProfile) => {
+            setSelectedAddress(addr);
+            if (saveToProfile) {
+              try {
+                const res = await fetch(`${API}/api/auth/profile`, {
+                  method: 'PUT',
+                  credentials: 'include',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(addr)
+                });
+                if (res.ok) {
+                  const updated = await res.json();
+                  updateUser(updated);
+                }
+              } catch (err) { console.error('Profile sync failed:', err); }
+            }
+            setAddressModal(false);
+          }} 
+        />
+      )}
 
       <Link to="/products" className="btn-secondary" style={{ padding: '8px 12px', marginBottom: 24, fontSize: '.85rem' }}>
         <ArrowLeft size={16} /> Back to Catalog

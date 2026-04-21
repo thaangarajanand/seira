@@ -40,7 +40,17 @@ const orderSchema = new mongoose.Schema({
     lng: { type: Number },
     updatedAt: { type: Date }
   },
-  completionOTP: { type: String }
+  completionOTP: { type: String },
+  deliveryAddress: {
+    name: String,
+    phone: String,
+    street: String,
+    city: String,
+    state: String,
+    pincode: String,
+    lat: Number,
+    lng: Number
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

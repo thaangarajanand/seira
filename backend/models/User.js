@@ -9,7 +9,11 @@ const userSchema = new mongoose.Schema({
   
   // Profile fields
   phone: { type: String },
-  address: { type: String },
+  address: { type: String }, // Consolidated address string
+  street: { type: String },
+  city: { type: String },
+  state: { type: String },
+  pincode: { type: String },
   bio: { type: String },
   location: {
     lat: { type: Number },

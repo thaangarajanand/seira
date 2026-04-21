@@ -1,5 +1,6 @@
 import { useCart } from '../context/CartContext';
-import { Trash2, Plus, Minus, CreditCard, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { Trash2, Plus, Minus, CreditCard, ShoppingBag, ArrowLeft, MapPin, Edit3 } from 'lucide-react';
+import CheckoutAddressModal from '../components/CheckoutAddressModal';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
@@ -11,6 +12,8 @@ export default function Cart() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState({ mock: true });
+  const [addressModal, setAddressModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     fetch(`${API}/api/payment/config`, { credentials: 'include' }).then(r => r.json()).then(setPayConfig).catch(() => {});
@@ -24,11 +27,21 @@ export default function Cart() {
     }
     if (cart.length === 0) return;
 
-    if (!user?.address || !user?.location) {
-      alert('📍 Please update your delivery address and location in your profile before checking out.');
-      navigate('/dashboard');
+    if (!selectedAddress && (!user?.street || !user?.location)) {
+      setAddressModal(true);
       return;
     }
+    
+    const addr = selectedAddress || {
+      name: user.name,
+      phone: user.phone,
+      street: user.street,
+      city: user.city,
+      state: user.state,
+      pincode: user.pincode,
+      lat: user.location?.lat,
+      lng: user.location?.lng
+    };
     
     // We create an order for each cart item
     setLoading(true);
@@ -53,7 +66,7 @@ export default function Cart() {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ ...payload, deliveryAddress: addr })
         });
         if (!res.ok) throw new Error('Failed to create order');
         const order = await res.json();
@@ -203,6 +216,29 @@ export default function Cart() {
             ))}
 
             <div className="cart-total-section">
+              {/* Delivery Address Snapshot */}
+              <div style={{ marginBottom: 20, padding: 16, background: 'var(--slate-50)', borderRadius: 12, border: '1px solid var(--slate-200)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                  <h3 style={{ fontSize: '.9rem', fontWeight: 800, color: 'var(--slate-500)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <MapPin size={16} /> Delivery Address
+                  </h3>
+                  <button onClick={() => setAddressModal(true)} style={{ color: 'var(--teal-600)', fontSize: '.8rem', fontWeight: 700, border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <Edit3 size={14} /> { (selectedAddress || user?.street) ? 'Change' : 'Add Address' }
+                  </button>
+                </div>
+                
+                { (selectedAddress || user?.street) ? (
+                  <div style={{ fontSize: '.85rem', color: 'var(--slate-700)' }}>
+                    <p style={{ fontWeight: 700, margin: '0 0 4-px 0' }}>{selectedAddress?.name || user.name}</p>
+                    <p style={{ margin: 0 }}>{selectedAddress?.street || user.street}</p>
+                    <p style={{ margin: 0 }}>{selectedAddress ? `${selectedAddress.city}, ${selectedAddress.state} - ${selectedAddress.pincode}` : `${user.city || ''}, ${user.state || ''} - ${user.pincode || ''}`}</p>
+                    <p style={{ margin: '4px 0 0 0', color: 'var(--slate-500)' }}>Phone: {selectedAddress?.phone || user.phone}</p>
+                  </div>
+                ) : (
+                  <p style={{ fontSize: '.85rem', color: 'var(--red-500)', fontWeight: 600 }}>Please add a delivery address to proceed.</p>
+                )}
+              </div>
+
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
                 <span style={{ fontSize: '1.2rem', color: 'var(--slate-600)' }}>Total Checkout Amount</span>
                 <span style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--teal-700)' }}>₹{totalAmount.toLocaleString('en-IN')}</span>
@@ -232,6 +268,32 @@ export default function Cart() {
                 <Shield size={12} /> SSL Secure & Encrypted Payments
               </p>
             </div>
+
+            {addressModal && (
+              <CheckoutAddressModal 
+                user={user} 
+                initialAddress={selectedAddress} 
+                onClose={() => setAddressModal(false)} 
+                onSave={async (addr, saveToProfile) => {
+                  setSelectedAddress(addr);
+                  if (saveToProfile) {
+                    try {
+                      const res = await fetch(`${API}/api/auth/profile`, {
+                        method: 'PUT',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(addr)
+                      });
+                      if (res.ok) {
+                        const updated = await res.json();
+                        updateUser(updated);
+                      }
+                    } catch (err) { console.error('Profile sync failed:', err); }
+                  }
+                  setAddressModal(false);
+                }} 
+              />
+            )}
           </div>
         )}
       </div>

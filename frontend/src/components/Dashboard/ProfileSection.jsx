@@ -9,8 +9,12 @@ const ProfileSection = ({ user, myReviews, API }) => {
     name: user.name || '',
     phone: user.phone || '',
     address: user.address || '',
+    street: user.street || '',
+    city: user.city || '',
+    state: user.state || '',
+    pincode: user.pincode || '',
     bio: user.bio || '',
-    location: user.location || { lat: null, lng: null }
+    location: user.location || { lat: 20.5937, lng: 78.9629 }
   });
   const [saveLoading, setSaveLoading] = useState(false);
 
@@ -79,7 +83,7 @@ const ProfileSection = ({ user, myReviews, API }) => {
             {!isEditing && (
               <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.85rem', color: 'var(--slate-600)' }}>
-                  <MapPin size={16} /> {user.address || 'Address not set'}
+                  <MapPin size={16} /> {user.street ? `${user.street}, ${user.city}, ${user.state} - ${user.pincode}` : (user.address || 'Address not set')}
                 </div>
                 {user.phone && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '.85rem', color: 'var(--slate-600)' }}>
@@ -109,8 +113,22 @@ const ProfileSection = ({ user, myReviews, API }) => {
               <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 99999 99999" />
             </div>
             <div className="form-group-v2" style={{ gridColumn: 'span 2' }}>
-              <label>Primary Business Address</label>
-              <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Factory / Office Address" />
+              <label>Street Address / Landmark</label>
+              <input type="text" name="street" value={formData.street} onChange={handleChange} placeholder="House No, Street, Landmark" />
+            </div>
+            <div className="form-group-v2">
+              <label>City</label>
+              <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div className="form-group-v2">
+                <label>State</label>
+                <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
+              </div>
+              <div className="form-group-v2">
+                <label>Pincode</label>
+                <input type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="ZIP Code" />
+              </div>
             </div>
             <div className="form-group-v2" style={{ gridColumn: 'span 2' }}>
               <label>Professional Bio / Company Description</label>
