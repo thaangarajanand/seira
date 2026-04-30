@@ -172,7 +172,7 @@ function CustomizeModal({ product, onClose, user }) {
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn, user, updateUser } = useAuth();
   const { addToCart } = useCart();
   const navigate = useNavigate();
 

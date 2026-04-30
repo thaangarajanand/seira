@@ -8,7 +8,7 @@ import { API_BASE_URL as API } from '../api';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, totalAmount, clearCart } = useCart();
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn, user, updateUser } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState({ mock: true });

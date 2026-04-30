@@ -158,10 +158,16 @@ router.get('/top-company', async (req, res) => {
 
 router.put('/profile', authMiddleware, async (req, res) => {
   try {
-    const { name, phone, address, bio, location, preferredLanguage } = req.body;
+    const { name, phone, address, street, city, state, pincode, bio, location, preferredLanguage, companyName } = req.body;
+    
+    const updateData = { name, phone, address, street, city, state, pincode, bio, location, preferredLanguage };
+    if (req.user.role === 'company' && companyName !== undefined) {
+      updateData.companyName = companyName;
+    }
+
     const user = await User.findByIdAndUpdate(
       req.user.id,
-      { name, phone, address, bio, location, preferredLanguage },
+      updateData,
       { new: true }
     ).select('-password');
     res.json(user);

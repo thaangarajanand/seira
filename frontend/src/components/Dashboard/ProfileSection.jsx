@@ -14,6 +14,7 @@ const ProfileSection = ({ user, myReviews, API }) => {
     state: user.state || '',
     pincode: user.pincode || '',
     bio: user.bio || '',
+    companyName: user.companyName || '',
     location: user.location || { lat: 20.5937, lng: 78.9629 }
   });
   const [saveLoading, setSaveLoading] = useState(false);
@@ -104,6 +105,12 @@ const ProfileSection = ({ user, myReviews, API }) => {
 
         {isEditing && (
           <form onSubmit={handleUpdateProfile} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, borderTop: '1px solid var(--slate-100)', paddingTop: 24 }}>
+            {user.role === 'company' && (
+              <div className="form-group-v2" style={{ gridColumn: 'span 2' }}>
+                <label>Company Name</label>
+                <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} required placeholder="Your Company Name" />
+              </div>
+            )}
             <div className="form-group-v2">
               <label>Full Name</label>
               <input type="text" name="name" value={formData.name} onChange={handleChange} required />
