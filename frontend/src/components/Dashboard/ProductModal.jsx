@@ -13,6 +13,20 @@ const ProductModal = ({ isOpen, onClose, product, onSave, API }) => {
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [existingCategories, setExistingCategories] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API}/api/products`, { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          const cats = [...new Set(data.map(p => p.category).filter(Boolean))];
+          setExistingCategories(cats);
+        }
+      })
+      .catch(console.error);
+  }, [API]);
+
   useEffect(() => {
     if (product) {
       setFormData({
@@ -107,13 +121,20 @@ const ProductModal = ({ isOpen, onClose, product, onSave, API }) => {
                 <Layers size={14} /> Category
               </label>
               <input 
+                list="category-options"
                 name="category" 
                 className="form-input" 
                 required 
                 value={formData.category} 
                 onChange={handleChange} 
                 placeholder="e.g. Machinery"
+                autoComplete="off"
               />
+              <datalist id="category-options">
+                {existingCategories.map(cat => (
+                  <option key={cat} value={cat} />
+                ))}
+              </datalist>
             </div>
             <div>
               <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

@@ -42,10 +42,11 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(403).json({ error: 'Only companies can list products' });
     }
     const { name, description, category, price, imageUrl } = req.body;
+    const normalizedCategory = category ? category.trim().toUpperCase() : undefined;
     const product = new Product({
       name,
       description,
-      category,
+      category: normalizedCategory,
       price,
       imageUrl,
       companyId: req.user.id
@@ -66,6 +67,9 @@ router.put('/:id', authMiddleware, async (req, res) => {
       return res.status(403).json({ error: 'Unauthorized to update this product' });
     }
 
+    if (req.body.category) {
+      req.body.category = req.body.category.trim().toUpperCase();
+    }
     Object.assign(product, req.body);
     await product.save();
     res.json(product);
