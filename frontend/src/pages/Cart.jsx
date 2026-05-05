@@ -1,5 +1,5 @@
 import { useCart } from '../context/CartContext';
-import { Trash2, Plus, Minus, CreditCard, ShoppingBag, ArrowLeft, MapPin, Edit3 } from 'lucide-react';
+import { Trash2, Plus, Minus, CreditCard, ShoppingBag, ArrowLeft, MapPin, Edit3, Shield } from 'lucide-react';
 import CheckoutAddressModal from '../components/CheckoutAddressModal';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
