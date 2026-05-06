@@ -55,7 +55,8 @@ export function CartProvider({ children }) {
     };
 
     syncCart();
-  }, [isLoggedIn, cart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
 
   // 3. Save to localStorage on change
   useEffect(() => {
