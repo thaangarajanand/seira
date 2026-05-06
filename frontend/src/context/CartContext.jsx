@@ -66,7 +66,6 @@ export function CartProvider({ children }) {
   useEffect(() => {
     if (!isLoggedIn) {
       // Clear cart on logout. This is intentional state synchronization.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCart([]);
       localStorage.removeItem('SEIRA-cart');
     }
