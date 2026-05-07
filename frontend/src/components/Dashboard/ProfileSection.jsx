@@ -14,8 +14,7 @@ const ProfileSection = ({ user, myReviews, API }) => {
     state: user.state || '',
     pincode: user.pincode || '',
     bio: user.bio || '',
-    companyName: user.companyName || '',
-    location: user.location || { lat: 20.5937, lng: 78.9629 }
+    companyName: user.companyName || ''
   });
   const [saveLoading, setSaveLoading] = useState(false);
 

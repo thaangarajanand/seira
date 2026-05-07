@@ -5,8 +5,14 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find({}).populate('companyId', 'name companyName averageRating completedOrdersCount portfolioImages');
-    res.json(products);
+    const products = await Product.find({ isApproved: true }).populate({
+      path: 'companyId',
+      match: { isApproved: true },
+      select: 'name companyName averageRating completedOrdersCount portfolioImages'
+    });
+    // Filter out products where company was not approved (companyId became null)
+    const validProducts = products.filter(p => p.companyId != null);
+    res.json(validProducts);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -41,6 +47,9 @@ router.post('/', authMiddleware, async (req, res) => {
     if (req.user.role !== 'company') {
       return res.status(403).json({ error: 'Only companies can list products' });
     }
+    if (!req.user.isApproved) {
+      return res.status(403).json({ error: 'Your company is pending admin approval and cannot add products yet.' });
+    }
     const { name, description, category, price, imageUrl } = req.body;
     const normalizedCategory = category ? category.trim().toUpperCase() : undefined;
     const product = new Product({
@@ -65,6 +74,9 @@ router.put('/:id', authMiddleware, async (req, res) => {
     
     if (String(product.companyId) !== String(req.user.id)) {
       return res.status(403).json({ error: 'Unauthorized to update this product' });
+    }
+    if (!req.user.isApproved) {
+      return res.status(403).json({ error: 'Your company is pending admin approval and cannot update products.' });
     }
 
     if (req.body.category) {

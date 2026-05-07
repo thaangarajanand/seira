@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, MapPin, Navigation, Phone, User, Home, Building, Hash, Save, Loader2, CheckSquare, Square } from 'lucide-react';
-import LocationPicker from './LocationPicker';
 
 export default function CheckoutAddressModal({ user, initialAddress, onSave, onClose }) {
   const [form, setForm] = useState({
@@ -9,33 +8,14 @@ export default function CheckoutAddressModal({ user, initialAddress, onSave, onC
     street: initialAddress?.street || user?.street || '',
     city: initialAddress?.city || user?.city || '',
     state: initialAddress?.state || user?.state || '',
-    pincode: initialAddress?.pincode || user?.pincode || '',
-    location: initialAddress?.location || user?.location || { lat: 20.5937, lng: 78.9629 }
+    pincode: initialAddress?.pincode || user?.pincode || ''
   });
 
-  const [loading, setLoading] = useState(false);
   const [saveToProfile, setSaveToProfile] = useState(true);
 
   const update = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }));
 
-  const handleGetCurrentLocation = () => {
-    if (!navigator.geolocation) return alert('Geolocation is not supported by your browser');
-    
-    setLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setForm(f => ({
-          ...f,
-          location: { lat: pos.coords.latitude, lng: pos.coords.longitude }
-        }));
-        setLoading(false);
-      },
-      () => {
-        alert('Could not get your location. Please select it on the map.');
-        setLoading(false);
-      }
-    );
-  };
+  // Location picker removed as per user request
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,33 +68,7 @@ export default function CheckoutAddressModal({ user, initialAddress, onSave, onC
             </div>
           </div>
 
-          <div style={{ gridColumn: 'span 2', marginTop: 12 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-              <label style={{ fontWeight: 700, fontSize: '.9rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <MapPin size={16} color="var(--teal-600)" /> Pin Drop Location
-              </label>
-              <button 
-                type="button" 
-                onClick={handleGetCurrentLocation} 
-                className="btn-secondary" 
-                style={{ fontSize: '.75rem', padding: '6px 12px' }}
-                disabled={loading}
-              >
-                {loading ? <Loader2 size={14} className="spinner" /> : <Navigation size={14} />} 
-                {loading ? ' Getting Location...' : ' Use My Location'}
-              </button>
-            </div>
 
-            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--slate-200)', background: 'var(--slate-50)', height: 250 }}>
-               <LocationPicker 
-                 position={[form.location.lat, form.location.lng]} 
-                 onPositionChange={(pos) => setForm(f => ({ ...f, location: { lat: pos[0], lng: pos[1] } }))} 
-               />
-            </div>
-            <p style={{ fontSize: '.7rem', color: 'var(--slate-400)', marginTop: 8 }}>
-              Click on the map to adjust your exact delivery pin for real-time tracking.
-            </p>
-          </div>
 
           <div style={{ gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }} onClick={() => setSaveToProfile(!saveToProfile)}>
             {saveToProfile ? <CheckSquare size={20} color="var(--teal-600)" /> : <Square size={20} color="var(--slate-300)" />}

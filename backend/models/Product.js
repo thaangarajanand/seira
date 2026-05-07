@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
   minOrderQuantity: { type: Number, default: 1 },
   averageRating: { type: Number, default: 0 },
   reviewCount: { type: Number, default: 0 },
-  isApproved: { type: Boolean, default: true }
+  isApproved: { type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

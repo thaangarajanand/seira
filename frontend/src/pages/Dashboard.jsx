@@ -423,7 +423,7 @@ export default function Dashboard() {
                 <p style={{ color: 'var(--slate-500)', margin: 0 }}>Welcome back, <span className="text-teal font-bold">{user.name}</span></p>
               </div>
             </div>
-            {isCompany && view === 'products' && (
+            {isCompany && view === 'products' && user.isApproved && (
               <button className="btn-primary" onClick={() => openProductModal('add')}>+ Add New Product</button>
             )}
           </div>
@@ -446,7 +446,7 @@ export default function Dashboard() {
               {view === 'profile' ? <ProfileSection user={user} myReviews={myReviews} API={API} setView={setView} /> :
                view === 'admin' ? <AdminPanel stats={stats} allUsers={allUsers} pendingCompanies={pendingCompanies} page={page} setPage={setPage} handleSuspendUser={handleSuspendUser} handleViewUserDetails={handleViewUserDetails} approveCompany={approveCompany} /> :
                view === 'analytics' ? <AnalyticsView stats={stats} /> :
-               isCompany && view === 'products' ? <InventoryManager myProducts={myProducts} openProductModal={openProductModal} deleteProduct={handleDeleteProduct} API={API} /> :
+               isCompany && view === 'products' ? <InventoryManager myProducts={myProducts} openProductModal={openProductModal} deleteProduct={handleDeleteProduct} API={API} user={user} /> :
                (
                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                     {orders.length === 0 ? (

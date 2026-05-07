@@ -34,7 +34,7 @@ const Badge = ({ status }) => {
   );
 };
 
-const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccept, handleNegotiate, handleReject, handleCancel, setPayModal, setShowReview, proposedRates, setProposedRates, proposedDates, setProposedDates, otpInputs, setOtpInputs, API }) => {
+const OrderCard = ({ order, isCompany, user, openChat, handleStatusUpdate, handleAccept, handleNegotiate, handleReject, handleCancel, setPayModal, setShowReview, proposedRates, setProposedRates, proposedDates, setProposedDates, otpInputs, setOtpInputs, API }) => {
   return (
     <div key={order._id} className="card order-card" style={{ borderLeft: `6px solid ${order.status === 'completed' ? 'var(--green-500)' : order.status === 'cancelled' ? 'var(--red-500)' : 'var(--teal-600)'}` }}>
       <div className="order-header">
@@ -87,7 +87,7 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
       )}
 
       {/* ── COMPANY ACTIONS: APPROVAL & NEGOTIATION ── */}
-      {isCompany && (order.status === 'pending_approval' || order.status === 'pending' || order.status === 'negotiating') && (
+      {isCompany && user?.isApproved && (order.status === 'pending_approval' || order.status === 'pending' || order.status === 'negotiating') && (
         <div className="negotiation-box warning" style={{ marginTop: 16 }}>
           <p className="neg-label">
             {order.status === 'pending_approval' ? '🆕 Manual Approval Needed — Customer ordered ₹' : 
@@ -114,7 +114,7 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
       )}
 
       {/* ── COMPANY: Ships after payment ── */}
-      {isCompany && order.status === 'accepted' && (
+      {isCompany && user?.isApproved && order.status === 'accepted' && (
         <div style={{ marginTop: 12, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <button className="btn-accept" onClick={() => handleStatusUpdate(order._id, 'processing')}>🏗️ Start Processing</button>
           <button className="btn-reject" onClick={() => handleCancel(order._id)}>❌ Reject Order</button>
@@ -122,7 +122,7 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
       )}
 
       {/* ── COMPANY: Processing stages ── */}
-      {isCompany && (order.status === 'processing' || order.status === 'shipped') && (
+      {isCompany && user?.isApproved && (order.status === 'processing' || order.status === 'shipped') && (
         <div style={{ marginTop: 12, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           {order.status === 'processing' && <button className="btn-accept" onClick={() => handleStatusUpdate(order._id, 'shipped')}>🚀 Ready to Ship</button>}
           {order.status === 'shipped' && <button className="btn-accept" style={{ background: 'var(--blue-500)' }} onClick={() => handleStatusUpdate(order._id, 'out_for_delivery')}>🚚 Out for Delivery</button>}
@@ -131,7 +131,7 @@ const OrderCard = ({ order, isCompany, openChat, handleStatusUpdate, handleAccep
       )}
 
       {/* ── COMPANY: Completes via OTP ── */}
-      {isCompany && (order.status === 'shipped' || order.status === 'out_for_delivery') && (
+      {isCompany && user?.isApproved && (order.status === 'shipped' || order.status === 'out_for_delivery') && (
         <div style={{ marginTop: 12, padding: 12, background: 'var(--sky-50)', borderRadius: 12, border: '1px solid var(--sky-200)' }}>
           <p style={{ fontSize: '.75rem', fontWeight: 700, marginBottom: 8, color: 'var(--sky-700)' }}>Delivery Verification Needed</p>
           <div style={{ display: 'flex', gap: 8 }}>

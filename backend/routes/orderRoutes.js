@@ -143,6 +143,9 @@ router.put('/:id/negotiate', authMiddleware, async (req, res) => {
     if (req.user.role !== 'company') {
       return res.status(403).json({ error: 'Only companies can negotiate' });
     }
+    if (!req.user.isApproved) {
+      return res.status(403).json({ error: 'Your company is pending admin approval and cannot negotiate orders.' });
+    }
 
     const order = await Order.findById(req.params.id);
     if (!order) return res.status(404).json({ error: 'Order not found' });
@@ -185,6 +188,9 @@ router.put('/:id/accept', authMiddleware, async (req, res) => {
 
     // ORDER LOCK: If company is accepting, check if someone else already did
     if (req.user.role === 'company') {
+      if (!req.user.isApproved) {
+        return res.status(403).json({ error: 'Your company is pending admin approval and cannot accept orders.' });
+      }
       if (order.company && String(order.company) !== String(req.user.id)) {
         return res.status(400).json({ error: 'Order already accepted by another company' });
       }
@@ -259,6 +265,9 @@ router.put('/:id/status', authMiddleware, otpLimiter, async (req, res) => {
 
     // SECURITY: Only assigned company or customer (depending on status) can update
     if (req.user.role === 'company') {
+      if (!req.user.isApproved) {
+        return res.status(403).json({ error: 'Your company is pending admin approval and cannot update orders.' });
+      }
       if (order.company && String(order.company) !== String(req.user.id)) {
         return res.status(403).json({ error: 'Not authorized for this order' });
       }

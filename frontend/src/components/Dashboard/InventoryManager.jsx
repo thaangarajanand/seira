@@ -1,14 +1,16 @@
 import React from 'react';
 import { Package, Plus } from 'lucide-react';
 
-const InventoryManager = ({ myProducts, openProductModal, deleteProduct, API }) => {
+const InventoryManager = ({ myProducts, openProductModal, deleteProduct, API, user }) => {
   return (
     <div className="product-grid" style={{ gridColumn: 'span 2' }}>
       {myProducts.length === 0 ? (
         <div className="empty-state-v2">
           <div className="empty-state-icon"><Package size={24}/></div>
           <p>No industrial products found in your inventory.</p>
-          <button className="btn-primary" style={{ marginTop: 12 }} onClick={()=>openProductModal('add')}>+ List Your First Product</button>
+          {user?.isApproved && (
+            <button className="btn-primary" style={{ marginTop: 12 }} onClick={()=>openProductModal('add')}>+ List Your First Product</button>
+          )}
         </div>
       ) : myProducts.map(p => (
         <div key={p._id} className="card product-card" style={{ position: 'relative', display: 'flex', flexDirection: 'column' }}>
