@@ -16,6 +16,8 @@ export default function Login() {
   const [captchaExpected, setCaptchaExpected] = useState('');
   const [requireOtp, setRequireOtp] = useState(false);
   const [otp, setOtp] = useState('');
+  const [forgotPasswordMode, setForgotPasswordMode] = useState(false); // false | 'request' | 'reset'
+  const [newPassword, setNewPassword] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -132,6 +134,52 @@ export default function Login() {
     }
   };
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email.trim() })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to send reset OTP');
+      setSuccess(data.message);
+      setForgotPasswordMode('reset');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email.trim(), otp, newPassword })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to reset password');
+      setSuccess(data.message);
+      setForgotPasswordMode(false);
+      setOtp('');
+      setNewPassword('');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="login-page">
       <div className="login-card">
@@ -141,8 +189,9 @@ export default function Login() {
             <span style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--slate-900)' }}>SEIRA</span>
           </div>
           <h1 className="login-title">
-            {isLogin ? 'Welcome back' : 'Create an account'}
+            {forgotPasswordMode === 'request' ? 'Reset Password' : forgotPasswordMode === 'reset' ? 'Set New Password' : isLogin ? 'Welcome back' : 'Create an account'}
           </h1>
+          {forgotPasswordMode === 'request' && <p style={{ fontSize: '.85rem', color: 'var(--slate-500)', marginTop: 8 }}>Enter your email to receive a password reset OTP.</p>}
         </div>
 
         {error && <div className="error-box" style={{ marginBottom: 16 }}>{error}</div>}
@@ -180,12 +229,22 @@ export default function Login() {
             <label className="form-label">Email</label>
             <input className="form-input" type="email" required value={form.email} onChange={update('email')} placeholder="you@example.com" />
           </div>
-          <div>
-            <label className="form-label">Password</label>
-            <input className="form-input" type="password" required value={form.password} onChange={update('password')} placeholder="••••••••" />
-          </div>
+          
+          {!forgotPasswordMode && (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label className="form-label" style={{ marginBottom: 0 }}>Password</label>
+                {isLogin && (
+                  <button type="button" onClick={() => { setForgotPasswordMode('request'); setError(''); setSuccess(''); }} style={{ fontSize: '.75rem', color: 'var(--teal-600)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
+                    Forgot password?
+                  </button>
+                )}
+              </div>
+              <input className="form-input" style={{ marginTop: 8 }} type="password" required value={form.password} onChange={update('password')} placeholder="••••••••" />
+            </div>
+          )}
 
-          {isLogin && requireCaptcha && (
+          {!forgotPasswordMode && isLogin && requireCaptcha && (
             <div style={{ padding: '16px', background: 'var(--slate-50)', borderRadius: '12px', border: '1px solid var(--slate-200)', marginTop: 12 }}>
               <label className="form-label" style={{ color: 'var(--teal-700)', fontWeight: 800 }}>Security Verification</label>
               <p style={{ fontSize: '.85rem', color: 'var(--slate-600)', marginBottom: 12 }}>{captchaQuestion}</p>
@@ -201,7 +260,7 @@ export default function Login() {
             </div>
           )}
 
-          {isLogin && requireOtp && (
+          {!forgotPasswordMode && isLogin && requireOtp && (
             <div style={{ padding: '16px', background: 'var(--teal-50)', borderRadius: '12px', border: '1px solid var(--teal-200)', marginTop: 12 }}>
               <label className="form-label" style={{ color: 'var(--teal-700)', fontWeight: 800 }}>Enter Verification OTP</label>
               <p style={{ fontSize: '.85rem', color: 'var(--slate-600)', marginBottom: 12 }}>A 6-digit code has been sent to your email.</p>
@@ -218,15 +277,50 @@ export default function Login() {
             </div>
           )}
 
-          <button type="submit" className="btn-submit" disabled={loading} onClick={isLogin ? (requireOtp ? handleOtpSubmit : handleLoginSubmit) : handleSubmit}>
-            {loading ? 'Please wait...' : (isLogin ? (requireOtp ? 'Verify & Login' : 'Sign In') : 'Create Account')}
+          {forgotPasswordMode === 'reset' && (
+            <>
+              <div style={{ padding: '16px', background: 'var(--teal-50)', borderRadius: '12px', border: '1px solid var(--teal-200)', marginTop: 12 }}>
+                <label className="form-label" style={{ color: 'var(--teal-700)', fontWeight: 800 }}>Enter Reset OTP</label>
+                <input 
+                  className="form-input" 
+                  type="text" 
+                  required 
+                  value={otp} 
+                  onChange={(e) => setOtp(e.target.value)} 
+                  placeholder="000000" 
+                  maxLength={6}
+                  style={{ background: '#fff', fontSize: '1.25rem', letterSpacing: '0.2em', textAlign: 'center' }}
+                />
+              </div>
+              <div style={{ marginTop: 16 }}>
+                <label className="form-label">New Password</label>
+                <input className="form-input" type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Enter new password (min 6 chars)" minLength={6} />
+              </div>
+            </>
+          )}
+
+          <button type="submit" className="btn-submit" disabled={loading} onClick={
+            forgotPasswordMode === 'request' ? handleForgotPassword : 
+            forgotPasswordMode === 'reset' ? handleResetPassword : 
+            isLogin ? (requireOtp ? handleOtpSubmit : handleLoginSubmit) : handleSubmit
+          }>
+            {loading ? 'Please wait...' : 
+             forgotPasswordMode === 'request' ? 'Send Reset OTP' : 
+             forgotPasswordMode === 'reset' ? 'Confirm New Password' : 
+             (isLogin ? (requireOtp ? 'Verify & Login' : 'Sign In') : 'Create Account')}
           </button>
         </form>
 
         <div className="login-toggle">
-          <button onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); setFailedAttempts(0); setRequireOtp(false); }}>
-            {isLogin ? "Don't have an account? Register" : 'Already have an account? Sign in'}
-          </button>
+          {forgotPasswordMode ? (
+            <button onClick={() => { setForgotPasswordMode(false); setError(''); setSuccess(''); }}>
+              Back to Login
+            </button>
+          ) : (
+            <button onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); setFailedAttempts(0); setRequireOtp(false); }}>
+              {isLogin ? "Don't have an account? Register" : 'Already have an account? Sign in'}
+            </button>
+          )}
         </div>
 
         <div style={{ marginTop: 24, textAlign: 'center', fontSize: '.75rem', color: 'var(--slate-400)' }}>

@@ -262,4 +262,70 @@ router.put('/profile', authMiddleware, async (req, res) => {
   }
 });
 
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) return res.status(404).json({ error: 'No account found with that email' });
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.resetPasswordOtp = otp;
+    user.resetPasswordOtpExpiry = new Date(Date.now() + 5 * 60 * 1000); // 5 mins
+    await user.save();
+
+    const nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.ethereal.email',
+      port: process.env.SMTP_PORT || 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      }
+    });
+
+    transporter.sendMail({
+      from: process.env.SMTP_USER || '"SEIRA System" <no-reply@seira.com>',
+      to: user.email,
+      subject: 'SEIRA Password Reset Verification',
+      text: `Your secure password reset OTP is: ${otp}\n\nIt will expire in 5 minutes.`
+    }).catch(err => console.error("Failed to send reset OTP email:", err.message));
+
+    console.log(`[DEV-RESET-OTP] OTP for ${user.email} is ${otp}`);
+    res.json({ message: 'Password reset OTP sent to registered email.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    if (!email || !otp || !newPassword) return res.status(400).json({ error: 'Email, OTP, and new password are required' });
+    if (newPassword.length < 6) return res.status(400).json({ error: 'Password must be at least 6 characters' });
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (user.resetPasswordOtp !== otp || !user.resetPasswordOtpExpiry || user.resetPasswordOtpExpiry < Date.now()) {
+      return res.status(400).json({ error: 'Invalid or expired OTP' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    user.resetPasswordOtp = undefined;
+    user.resetPasswordOtpExpiry = undefined;
+    
+    // Also reset lockouts since they verified via email
+    user.loginAttempts = 0;
+    user.lockUntil = undefined;
+    
+    await user.save();
+    res.json({ message: 'Password successfully reset! You can now log in.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

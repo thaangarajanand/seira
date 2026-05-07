@@ -50,7 +50,11 @@ const userSchema = new mongoose.Schema({
   
   // OTP for Company Login
   loginOtp: { type: String },
-  loginOtpExpiry: { type: Date }
+  loginOtpExpiry: { type: Date },
+
+  // OTP for Password Reset
+  resetPasswordOtp: { type: String },
+  resetPasswordOtpExpiry: { type: Date }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
