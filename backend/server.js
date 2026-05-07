@@ -67,6 +67,9 @@ app.use(helmet.contentSecurityPolicy({
   }
 }));
 
+// Trust the reverse proxy (Render, Vercel, etc) so rate limiters can read correct IPs
+app.set('trust proxy', 1);
+
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 300,

@@ -98,7 +98,7 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ error: 'Your company account is pending admin approval.' });
     }
 
-    if (user.role === 'company') {
+    if (user.role === 'company' || user.role === 'customer') {
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
       user.loginOtp = otp;
       user.loginOtpExpiry = new Date(Date.now() + 5 * 60 * 1000); // 5 mins
@@ -115,10 +115,11 @@ router.post('/login', async (req, res) => {
           }
         });
         
+        const roleLabel = user.role === 'company' ? 'Company' : 'Customer';
         await transporter.sendMail({
           from: process.env.SMTP_USER || '"SEIRA System" <no-reply@seira.com>',
           to: user.email,
-          subject: 'SEIRA Company Login Verification',
+          subject: `SEIRA ${roleLabel} Login Verification`,
           text: `Your secure login OTP is: ${otp}\n\nIt will expire in 5 minutes.`
         });
         console.log(`[DEV] Sent OTP for ${user.email} is ${otp}`);
