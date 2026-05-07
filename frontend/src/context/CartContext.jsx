@@ -63,13 +63,7 @@ export function CartProvider({ children }) {
     localStorage.setItem('SEIRA-cart', JSON.stringify(cart));
   }, [cart]);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      // Clear cart on logout. This is intentional state synchronization.
-      setCart([]);
-      localStorage.removeItem('SEIRA-cart');
-    }
-  }, [isLoggedIn]);
+  // Cart clearing logic removed to persist cart data even when logged out
 
   const addToCart = async (product, type = 'standard', customData = null) => {
     const newItem = { 

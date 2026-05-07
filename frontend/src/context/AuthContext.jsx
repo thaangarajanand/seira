@@ -78,7 +78,7 @@ export function AuthProvider({ children }) {
         credentials: 'include'
       });
       setUser(null);
-      localStorage.clear(); // Clear any non-sensitive UI preferences
+      // Intentionally not calling localStorage.clear() to preserve cart data
     } catch (err) {
       console.error('Logout failed:', err);
     }

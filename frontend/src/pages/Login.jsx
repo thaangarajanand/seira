@@ -14,6 +14,8 @@ export default function Login() {
   const [captchaQuestion, setCaptchaQuestion] = useState('');
   const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [captchaExpected, setCaptchaExpected] = useState('');
+  const [requireOtp, setRequireOtp] = useState(false);
+  const [otp, setOtp] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -85,6 +87,12 @@ export default function Login() {
         throw new Error(data.error || 'Login failed');
       }
 
+      if (data.requireOtp) {
+        setRequireOtp(true);
+        setSuccess(data.message);
+        return;
+      }
+
       login(data.user);
       setFailedAttempts(0);
       setRequireCaptcha(false);
@@ -92,6 +100,33 @@ export default function Login() {
     } catch (err) {
       setError(err.message);
       if (isLogin) setFailedAttempts(prev => prev + 1);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API}/api/auth/verify-login-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email.trim(), otp }),
+        credentials: 'include'
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.error || 'OTP verification failed');
+
+      login(data.user);
+      setFailedAttempts(0);
+      setRequireOtp(false);
+      navigate(data.user.role === 'customer' ? '/user-home' : '/dashboard');
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -166,13 +201,30 @@ export default function Login() {
             </div>
           )}
 
-          <button type="submit" className="btn-submit" disabled={loading} onClick={isLogin ? handleLoginSubmit : handleSubmit}>
-            {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
+          {isLogin && requireOtp && (
+            <div style={{ padding: '16px', background: 'var(--teal-50)', borderRadius: '12px', border: '1px solid var(--teal-200)', marginTop: 12 }}>
+              <label className="form-label" style={{ color: 'var(--teal-700)', fontWeight: 800 }}>Enter Verification OTP</label>
+              <p style={{ fontSize: '.85rem', color: 'var(--slate-600)', marginBottom: 12 }}>A 6-digit code has been sent to your email.</p>
+              <input 
+                className="form-input" 
+                type="text" 
+                required 
+                value={otp} 
+                onChange={(e) => setOtp(e.target.value)} 
+                placeholder="000000" 
+                maxLength={6}
+                style={{ background: '#fff', fontSize: '1.25rem', letterSpacing: '0.2em', textAlign: 'center' }}
+              />
+            </div>
+          )}
+
+          <button type="submit" className="btn-submit" disabled={loading} onClick={isLogin ? (requireOtp ? handleOtpSubmit : handleLoginSubmit) : handleSubmit}>
+            {loading ? 'Please wait...' : (isLogin ? (requireOtp ? 'Verify & Login' : 'Sign In') : 'Create Account')}
           </button>
         </form>
 
         <div className="login-toggle">
-          <button onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); setFailedAttempts(0); }}>
+          <button onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); setFailedAttempts(0); setRequireOtp(false); }}>
             {isLogin ? "Don't have an account? Register" : 'Already have an account? Sign in'}
           </button>
         </div>

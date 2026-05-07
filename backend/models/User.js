@@ -46,7 +46,11 @@ const userSchema = new mongoose.Schema({
   loginAttempts: { type: Number, default: 0 },
   lockUntil: { type: Date },
   lastLoginIP: { type: String },
-  lastLoginDevice: { type: String }
+  lastLoginDevice: { type: String },
+  
+  // OTP for Company Login
+  loginOtp: { type: String },
+  loginOtpExpiry: { type: Date }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

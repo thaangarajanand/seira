@@ -80,7 +80,7 @@ export default function Cart() {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: total })
+        body: JSON.stringify({ amount: total, orderIds: orderIds.map(o => o.orderId) })
       });
       if (!payRes.ok) throw new Error('Payment init failed');
       const payOrder = await payRes.json();

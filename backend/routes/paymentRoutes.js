@@ -22,13 +22,32 @@ if (!isMockMode) {
 // POST /api/payment/create-order (Auth required)
 router.post('/create-order', authMiddleware, async (req, res) => {
   try {
-    const { amount, currency = 'INR', receipt = 'receipt_' + Date.now(), orderId } = req.body;
+    const { currency = 'INR', receipt = 'receipt_' + Date.now(), orderId, orderIds } = req.body;
+    
+    const idsToVerify = orderIds || (orderId ? [orderId] : []);
+    if (idsToVerify.length === 0) {
+      return res.status(400).json({ error: 'No order IDs provided for payment' });
+    }
+
+    const orders = await Order.find({ _id: { $in: idsToVerify } });
+    if (orders.length !== idsToVerify.length) {
+      return res.status(404).json({ error: 'One or more orders not found' });
+    }
+
+    for (const order of orders) {
+      if (String(order.customer) !== String(req.user.id)) {
+        return res.status(403).json({ error: `Not authorized to pay for order ${order._id}` });
+      }
+    }
+
+    // Calculate actual total amount
+    const totalExpected = orders.reduce((sum, o) => sum + (o.finalRate || o.proposedRate || 0) * (o.quantity || 1), 0);
 
     // Mock mode — return a simulated order
     if (isMockMode) {
       return res.json({
         id: 'mock_order_' + Date.now(),
-        amount: Math.round(amount * 100),
+        amount: Math.round(totalExpected * 100),
         currency,
         mock: true,
         orderId
@@ -36,7 +55,7 @@ router.post('/create-order', authMiddleware, async (req, res) => {
     }
 
     const options = {
-      amount: Math.round(amount * 100),
+      amount: Math.round(totalExpected * 100),
       currency,
       receipt,
     };

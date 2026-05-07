@@ -36,6 +36,8 @@ const ProfileSection = ({ user, myReviews, API }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'state' && value && !/^[a-zA-Z\s]*$/.test(value)) return;
+    if (name === 'phone' && value && !/^[0-9+]*$/.test(value)) return;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
