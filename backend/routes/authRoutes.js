@@ -98,38 +98,6 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ error: 'Your company account is pending admin approval.' });
     }
 
-    if (user.role === 'company' || user.role === 'customer') {
-      const otp = Math.floor(100000 + Math.random() * 900000).toString();
-      user.loginOtp = otp;
-      user.loginOtpExpiry = new Date(Date.now() + 5 * 60 * 1000); // 5 mins
-      await user.save();
-      
-      try {
-        const nodemailer = require('nodemailer');
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST || 'smtp.ethereal.email',
-          port: process.env.SMTP_PORT || 587,
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS
-          }
-        });
-        
-        const roleLabel = user.role === 'company' ? 'Company' : 'Customer';
-        await transporter.sendMail({
-          from: process.env.SMTP_USER || '"SEIRA System" <no-reply@seira.com>',
-          to: user.email,
-          subject: `SEIRA ${roleLabel} Login Verification`,
-          text: `Your secure login OTP is: ${otp}\n\nIt will expire in 5 minutes.`
-        });
-        console.log(`[DEV] Sent OTP for ${user.email} is ${otp}`);
-      } catch (err) {
-        console.error("Failed to send OTP email:", err);
-        console.log(`[DEV-FALLBACK] OTP for ${user.email} is ${otp}`);
-      }
-      
-      return res.json({ requireOtp: true, message: 'OTP sent to registered email address.' });
-    }
 
     // Success - Reset security tracking
     user.loginAttempts = 0;
@@ -168,54 +136,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/verify-login-otp', async (req, res) => {
-  try {
-    const { email, otp } = req.body;
-    if (!email || !otp) return res.status(400).json({ error: 'Email and OTP are required' });
-
-    const user = await User.findOne({ email: email.toLowerCase().trim() });
-    if (!user) return res.status(404).json({ error: 'User not found' });
-
-    if (user.loginOtp !== otp || !user.loginOtpExpiry || user.loginOtpExpiry < Date.now()) {
-      return res.status(400).json({ error: 'Invalid or expired OTP' });
-    }
-
-    // Clear OTP and reset security tracking
-    user.loginOtp = undefined;
-    user.loginOtpExpiry = undefined;
-    user.loginAttempts = 0;
-    user.lockUntil = undefined;
-    user.lastLoginIP = req.ip || req.headers['x-forwarded-for'];
-    user.lastLoginDevice = req.headers['user-agent'];
-    await user.save();
-
-    const expiresIn = '1d';
-    const maxAge = 24 * 60 * 60 * 1000;
-
-    const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn });
-    const isProduction = process.env.NODE_ENV === 'production';
-    
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https',
-      sameSite: (isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https') ? 'none' : 'lax',
-      maxAge
-    });
-
-    res.json({
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        isApproved: user.isApproved,
-        companyName: user.companyName
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 router.post('/logout', (req, res) => {
   res.clearCookie('token');
